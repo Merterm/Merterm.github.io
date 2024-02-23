@@ -1,208 +1,269 @@
 <!DOCTYPE html>
-<!-- saved from url=(0042)http://people.eecs.berkeley.edu/~avisingh/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
 
-  <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Mert İnan">
+  <meta property="og:description"
+    content="Ph.D. Student at Khoury College of Computer Science, Northeastern University, studying multimodal conversational AI.">
+  <meta property="og:image" content="https://merterm.github.io/assets/images/mert.jpg">
+  <meta property="og:url" content="https://merterm.github.io/">
 
-  <title>Mert Inan</title>
-  <meta name="description" content="Academic Website">
-  <meta name="author" content="Mert Inan">
+  <meta itemprop="name" content="Mert İnan">
+  <meta itemprop="description"
+    content="Ph.D. Student at Khoury College of Computer Science, Northeastern University, studying multimodal conversational AI.">
+  <meta itemprop="image" content="https://merterm.github.io/assets/images/mert.jpg">
 
-  <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta http-equiv=”refresh” content=”0;url=http://merterm.github.io” />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mert İnan">
+  <meta name="twitter:description"
+    content="Ph.D. Student at Khoury College of Computer Science, Northeastern University, studying multimodal conversational AI.">
+  <meta name="twitter:creator" content="@Merterm">
+  <!-- Twitter summary card with large image must be at least 280x150px -->
+  <meta name="twitter:image:src" content="https://merterm.github.io/assets/images/mert.jpg">
 
-  <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <meta name="author" content="Mert İnan">
 
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="https://merterm.github.io/css/academicons.min.css"/>
-  <link rel="stylesheet" href="https://merterm.github.io/css/normalize.css">
-  <link rel="stylesheet" href="https://merterm.github.io/css/skeleton.css">
-  <link rel="stylesheet" href="https://merterm.github.io/css/custom.css">
-  <link rel="stylesheet" href="https://merterm.github.io/css/social-circles.min.css">
-  <link rel="stylesheet" href="https://merterm.github.io/css/font-awesome.min.css">
+  <title>Mert İnan</title>
+  <!-- <link rel="icon" href="/assets/images/favicon.ico" type="image/png" sizes="16x16 32x32"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css"
+    integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/index.css">
 
-  <style>
-    a { text-decoration:none; }
-    a { color:#A31F34; }
-    a:hover {color:#A31F34;}
-  </style>
+  <!--dependencies-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+  <!-- <script src="https://d3js.org/d3-time.v1.min.js"></script>
+  <script src="https://d3js.org/d3-time-format.v2.min.js"></script>
+  <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+  <script src="https://d3js.org/d3-collection.v1.min.js"></script> -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script> -->
 
-  <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="images/favicon-32x32.png">
+  
+  <script src="assets/js/common.js" type="module"></script>
+  <script src="assets/js/index.js" type="module"></script>
+  <!-- <script src="assets/js/MTLLoader.js" type="module"></script> -->
+  <!-- <script src="assets/js/GLTFLoader.js" type="module"></script>
+  <script src="assets/js/OrbitControls.js" type="module"></script>
+  <script src="assets/js/fun.js" type="module"></script> -->
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-10WJKQK9XQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-10WJKQK9XQ');
+  </script>
 
 </head>
+
 <body>
+  <div class="canvas-container"></div>
 
-  <div class="container">
+  <header class="container">
+    <h1 class="title">Mert İnan</h1>
     <div class="row">
-      <div class="one-half column" style="margin-top: 10%">
-        <img class="bio-image" src="https://merterm.github.io/images/photo.jpg">
-      </div>
-      <div class="one-half column" style="margin-top: 10%">
-        <h2>Mert İnan</h2>
-        <p> Computer Science Ph.D. Student @<br>
-        <a href="https://www.khoury.northeastern.edu/">Khoury College of Computer Sciences</a><br/>
-        <a href="https://www.northeastern.edu/">Northeastern University</a><br/>
-	inan dot m at northeastern dot edu<br/></p>
-	      
-	<p>Master's Degree from<br>
-        <a href="https://www.cmu.edu/ms-compbio/">Computational Biology Department</a><br/>
-        <a href="http://www.cbd.cmu.edu/">School of Computer Science & Mellon College of Science</a><br/>
-        <a href="https://www.cmu.edu/">Carnegie Mellon University</a><br/>
-        mert dot inan at alumni dot cmu dot edu<br/></p>
-
-	<a class="ai ai-google-scholar social-button borderless" href="https://scholar.google.com/citations?user=ztpK4iwAAAAJ"></a>
-        <a class="icon-github social-button borderless" href="http://github.com/Merterm"></a>
-        <a class="icon-linkedin social-button borderless" href="https://www.linkedin.com/in/merterm/"></a><br/>
-
-
-        <a href="http://merterm.github.io/phd_cv.pdf" style="text-decoration:none;">Curriculum Vitæ</a>
-	<p>
-
-      </div>
-    </div>
-
-    <div class="row" style="margin-top: 2%" id="about">
-
-      <p>I am a Ph.D. student in Computer Science at Northeastern University. I am currently doing research with Dr. <a href="https://www.malihealikhani.com/">Malihe Alikhani</a>. I have a Master's degree from Computational Biology Department in School of Computer Science and Mellon College of Science of Carnegie Mellon University. I did research with Prof. <a href="http://www.cnbc.cmu.edu/~tai/">Tai-Sing Lee</a>. My Bachelor's degree in Computer Science is from <a href="https://w3.bilkent.edu.tr/bilkent/">Bilkent University</a>, Turkey.
-      </p>
-
-      <p> My research and background is transdisciplinary. I am currently interested in investigating cognitively-aware multimodal dialogue systems, sign language processing, and NeuroRoboNLP. I enjoy combining linguistics, cognitive neuroscience, and natural language processing through state-of-the-art machine learning applications.</p>
-	    <p> I see my research as a gradient: </p>
-	    <img src="https://merterm.github.io/images/research_interest.png" style='height: 100%; width: 100%; object-fit: contain'>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="row" style="margin-top: 2%" id="pubs">
-      <h4>research</h4>
-    </div>
-    <div class="row">
-        <div class="nine columns" style="margin-top: 0%"><p>
-          <b>Modeling Intensification for Sign Language Generation: A Computational Approach</b> <br>
-          <em><b>Mert Inan</b>, Yang Zhong, Sabit Hassan, Lorna Quandt, Malihe Alikhani</em><br>
-          <b>Findings of the Association for Computational Linguistics: ACL 2022</b> <a href="https://aclanthology.org/2022.findings-acl.228.pdf">[paper]</a>  <br>
+      <section class="column">
+        <img class="profile-image" alt="Profile Image of Mert İnan">
+        <div class="profile-item center">
+          PhD Candidate @ Northeastern University
         </div>
-    </div>
-    <div class="row">
-        <div class="nine columns" style="margin-top: 0%"><p>
-          <b>Including Facial Expressions in Contextual Embeddings for Sign Language Generation</b> <br>
-          <em>Carla Viegas, <b>Mert İnan</b>, Lorna Quandt, Malihe Alikhani</em><br>
-          <b>*SEM 2023</b> <a href="https://aclanthology.org/2023.starsem-1.1/">[paper]</a>  <br>
-        </div>
-    </div>
-    <div class="row">
-        <div class="nine columns" style="margin-top: 0%"><p>
-          <b>COSMic: A Coherence-Aware Generation Metric for Image Descriptions</b> <br>
-          <em><b>Mert İnan</b>, Piyush Sharma, Baber Khalid, Radu Soricut, Matthew Stone, Malihe Alikhani</em><br>
-          <b>Findings of the Association for Computational Linguistics: EMNLP 2021</b> <a href="https://arxiv.org/abs/2109.05281">[paper]</a>  <br>
-        </div>
-    </div>
-    <div class="row">
-        <div class="nine columns" style="margin-top: 0%"><p>
-          <b>Structurally-Informed Deconvolution of Functional Magnetic Resonance Imaging Data</b> <br>
-          Thomas A. W. Bolton, Younes Farouj, <em><b>Mert Inan</b> and Dimitri Van De Ville</em><br>
-          <b>ISBI 2019</b> <a href="https://ieeexplore.ieee.org/document/8759218">[paper]</a>  <br>
-        </div>
-    </div>
-    <div class="row">
-        <div class="nine columns" style="margin-top: 0%"><p>
-          <b>Revealing directional cross-regional functional interplays with sparse coupled hidden Markov models</b> <br>
-          Thomas A. W. Bolton, <em><b>Mert Inan</b> and Dimitri Van De Ville</em><br>
-          <b>OHBM 2019</b> <a href="https://files.aievolution.com/prd/hbm1901/abstracts/52301/M752_Bolton.pdf">[poster]</a>  <br>
-        </div>
-    </div>
-
-  </div>
-	    
- <div class="container">
-    <div class="row" style="margin-top: 2%" id="pubs">
-      <h4>teaching</h4>
-    </div>
-    <div class="row">
-	<div class="three columns" style="margin-top: 0%"><p>
-		<img src="https://merterm.github.io/images/0_Bgs_movie.gif" style='height: 100%; width: 100%; object-fit: contain'>
-	</div>
-        <div class="seven columns" style="margin-top: 0%"><p>
-          <b>Multiscale Biological Modeling: An Online Course, Prologue</b> <br>
-          Noah Lee, <em><b>Mert Inan</b> and <a href="http://compeau.cbd.cmu.edu/">Phillip Compeau<a></em><br>
-          <b>Massive Online Course</b> <a href="https://phcompeau.github.io/biological_modeling_course/prologue/">[course link]</a>  <br>
-        </div>
-    </div>
-
-  </div>
-
-
-  <!-- <div class="container">
-    <div class="row" style="margin-top: 2%" id="exps">
-      <h4>work experience</h4>
-      <table class="table table-hover">
-	<tr>
-          <td class="col-md-1"><div><img src="./images/profile/nthu.png" class="img-circle imgb" height="50"></a></td>
-          <td class="col-md-3">Sep 2018 - Present</td>
-          <td>
-            R.A. <strong><a href="https://www.csail.mit.edu/">Computer Science and Artificial Intelligence Lab, MIT</a></strong> <br />
-            Advisor: Prof. Antonio Torralba & Prof. Stefanie Jegelka
-          </td>
-        </tr>
-        <tr>
-          <td class="col-md-1"><div><img src="./images/profile/nthu.png" class="img-circle imgb" height="50"></a></td>
-          <td class="col-md-3">Aug 2017 - Dec 2017</td>
-          <td>
-            R.A. <strong><a href="http://www.cs.utoronto.ca/~fidler/index.html">Machine Learning Lab, UofT</a></strong> <br />
-            Advisor: Prof. Sanja Fidler
-          </td>
-        </tr>
-      <tr>
-        <td class="col-md-1"><div><img src="./images/profile/nthu.png" class="img-circle imgb" height="50"></a></td>
-        <td class="col-md-3">July 2015 - Aug 2017</td>
-        <td>
-          R.A. <strong><a href="http://aliensunmin.github.io/publications.html">Vision Science Lab, NTHU</a></strong> <br />
-          Advisor Prof. Min Sun
-        </td>
-      </tr>
-      <tr>
-        <td class="col-md-1">
-          <a href="https://www.itri.org.tw/eng/">
-              <div><img src="./images/profile/itri.png" class="img-circle imgb" height="50"></div>
+        <div class="profile-item center">
+          <a class="link-btn" href="http://merterm.github.io/phd_cv.pdf"
+            target="_blank">
+            Curriculum Vitæ
+          </a> <span class="dv">|</span>
+          <a class="link-btn" href="https://scholar.google.com/citations?user=ztpK4iwAAAAJ" target="_blank">
+            Google Scholar
           </a>
-        </td>
-        <td class="col-md-3">April 2016 - May 2017</td>
-        <td>
-          Intern <strong><a href="https://www.itri.org.tw/eng/">Industrial Technology Research Institute</a></strong><br />
-          Advisor: Dr. Dung-Chan Tsai
-        </td>
-      </tr>
-      <tr>
-        <td class="col-md-1">
-          <a href="https://www.umbocv.com/#camera">
-              <div><img src="./images/profile/umbo.png" class="img-circle imgb" height="50"></div>
+          <span class="dv">|</span>
+          <a href="https://twitter.com/Merterm" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i>
+            <span class="visuallyhidden">Twitter</span>
           </a>
-        </td>
-        <td class="col-md-3">June 2016 - Sept 2016</td>
-        <td>
-          Intern <strong><a href="https://www.umbocv.com/#camera">Umbo CV Inc.</a></strong><br />
-          Advisor: Dr. Ping-Lin Chang
-        </td>
-      </tr>
-      </table>
+          <span class="dv">|</span>
+          <a href="https://www.linkedin.com/in/merterm/" target="_blank"><i class="fab fa-linkedin"
+              aria-hidden="true"></i>
+            <span class="visuallyhidden">LinkedIn</span>
+          </a>
+          <span class="dv">|</span>
+          <a href="https://github.com/Merterm" target="_blank"><i class="fab fa-github" aria-hidden="true"></i>
+            <span class="visuallyhidden">Github</span></a>
+
+        </div>
+      </section>
+      <section class="column">
+        <p>I am a Ph.D. student in Computer Science at Northeastern University. I am currently doing research with Dr. <a href="https://www.malihealikhani.com/">Malihe Alikhani</a>. I have a Master's degree from Computational Biology Department in School of Computer Science and Mellon College of Science of Carnegie Mellon University. I did research with Prof. <a href="http://www.cnbc.cmu.edu/~tai/">Tai-Sing Lee</a>. My Bachelor's degree in Computer Science is from <a href="https://w3.bilkent.edu.tr/bilkent/">Bilkent University</a>, Turkey.
+        </p>
+        <p> My research and background is transdisciplinary. I am currently interested in investigating cognitively-aware multimodal dialogue systems, sign language processing, and NeuroRoboNLP. I enjoy combining linguistics, cognitive neuroscience, and natural language processing through state-of-the-art machine learning applications.</p>
+	      <p> I see my research as a gradient: </p>
+        <p>
+	      <img src="https://merterm.github.io/images/research_interest.png" style='height: 80%; width: 80%; object-fit: contain'>
+        </p>
+        <!-- <p>
+          Mert İnan is a <strong>PhD Candidate</strong> at <strong>Northeastern University</strong>.
+          His research vision is to lower barriers for everyone to understand and communicate complex data. He tackles
+          this challenge by studying <a href="https://en.wikipedia.org/wiki/Visualization_(graphics)"
+            target="_blank"><strong>visualization</strong></a> within the broad context of <a
+            href="https://en.wikipedia.org/wiki/Human%E2%80%93computer_interaction"
+            target="_blank"><strong>human-computer interaction</strong></a>.
+          His research investigates innovative approaches to interact with data, going beyond traditional expert systems
+          and addressing the needs of a broader audience, including designers, journalists, and casual users.
+
+          His work has been recognized with awards from <a href="https://sigchi.org/conferences/conference-history/chi/"
+            target="_blank">ACM CHI</a>, <a href="https://sigchi.org/conferences/conference-history/uist/">ACM UIST</a>,
+          and <a href="https://www.informationisbeautifulawards.com/">Kantar Information is Beautiful Awards</a>.
+        </p> -->
+        <!-- <p>
+          He earned a Ph.D. in Computer Science from Harvard University. His Ph.D. studies were supported by <a
+            href="http://en.ikef.or.kr/" target="_blank">Kwanjeong Educational Foundation</a> and <a
+            href="http://www.siebelscholars.com/scholars/NamWookKim" target="_blank">Siebel Scholars Foundation</a>.
+          Prior to Harvard, he was a research associate at KAIST and worked at Samsung and LG as a research engineer. He
+          also received M.S. in Computer Science from Stanford University and B.S. in Mathematics and Computer Science
+          from Stony Brook University, and B.S. in Digital Media from Ajou University (Dual-Degree).
+
+        </p> -->
+      </section>
+      <section class="column">
+        <h2 class="title">News</h2>
+        <div class="search">
+          <!-- <label for="search-news" class="visuallyhidden">Search News</label> -->
+
+          <input id="search-news" type="text" name='news' placeholder="Search News..." aria-label="search news">
+        </div>
+
+        <div class="news" role="list">
+
+        </div>
+        <div><a class="see-all" href="/detail/?page=news">See All News ... </a></div>
+      </section>
+
     </div>
-  </div> -->
 
-</div>
+  </header>
+  <main class="row container">
 
-<br>
-<br>
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="column">
+      <section>
+        <h2 class="title">Publications</h2>
+        <div class="search">
+          <!-- <label for="search-news" class="visuallyhidden">Search Publications</label> -->
+          <input type="text" name='publication' placeholder="Search Publications..." aria-label="search publications">
+        </div>
+        <div class="filter">
+          <div class="chip selected" data-cond="pub-all" role="button" aria-label="Filter Publications by All">All</div>
+          <div class="chip" data-cond="pub-featured" role="button" aria-label="Filter Publications by Featured">Featured
+          </div>
+          <!-- <div class="chip" data-cond="pub-awards" role="button" aria-label="Filter Publications by Awards">Awards</div> -->
+          <div class="chip" data-cond="pub-first-author" role="button" aria-label="Filter Publications by First Author">
+            First Author</div>
+          <!-- <div class="chip" data-cond="pub-recent">Recent</div> -->
+          <!-- <div class="chip" data-cond="pub-thesis" role="button" aria-label="Filter Publications by Thesis">Thesis</div> -->
+          <!-- <div class="chip" data-cond="pub-journal" role="button" aria-label="Filter Publications by Journal">Journal
+          </div> -->
+          <div class="chip" data-cond="pub-conference" role="button" aria-label="Filter Publications by Conference">
+            Conference</div>
+          <div class="switch-container">
+            <label id="by-time-switch" class="switch" role="button" aria-label="Filter by Time" aria-pressed="true">
+              <input id="by-time" class="checkbox" type="checkbox" checked name="byTime" />
+              <span class="slider"></span>
+            </label>
+            <span class="label" aria-hidden="true">By Time</span>
 
+          </div>
+        </div>
+        <div class="pubs">
+
+        </div>
+      </section>
+    </div>
+    <div class="column">
+      <!-- <section>
+        <h2 class="title">Advisees</h2>
+        <div class="people" role="list">
+
+        </div>
+        <div><a class="see-all" href="/detail/?page=people">See All People ... </a></div>
+      </section> -->
+      <section>
+        <h2 class="title">Travels</h2>
+        <div class="search">
+          <input type="text" name='travel' placeholder="Search Travels..." aria-label="search travels">
+        </div>
+        <div class="travels" role="list">
+
+        </div>
+        <div><a class="see-all" href="/detail/?page=travel">See All Travels ... </a></div>
+      </section>
+      <section>
+        <h2 class="title">Books</h2>
+        <div class="courses" role="list">
+
+        </div>
+      </section>
+      <section>
+        <h2 class="title">Teaching</h2>
+        <div class="courses" role="list">
+
+        </div>
+        <div><a class="see-all" href="/detail/?page=teaching">See All Courses ... </a></div>
+      </section>
+      <section>
+        <h2 class="title">Contact</h2>
+        <div class="profile-item email">
+          inan dot m at northeastern dot edu
+        </div>
+        <!-- <div class="profile-item">
+          245 Beacon Street, Room 428B, Chestnut Hill, MA 02467
+        </div> -->
+        <div class="profile-item">
+          <a href="https://twitter.com/Merterm" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i>
+            <span class="visuallyhidden">Twitter</span>
+          </a>
+          <span class="dv">|</span>
+          <!--           <a href="https://www.instagram.com/namwkim/" target="_blank"><i class="fab fa-instagram-square"
+              aria-hidden="true"></i>
+            <span class="visuallyhidden">Instagram</span>
+          </a>
+          <span class="dv">|</span> -->
+          <a href="https://www.linkedin.com/in/merterm/" target="_blank"><i class="fab fa-linkedin"
+              aria-hidden="true"></i>
+            <span class="visuallyhidden">LinkedIn</span>
+          </a>
+          <span class="dv">|</span>
+          <a href="https://github.com/Merterm" target="_blank"><i class="fab fa-github" aria-hidden="true"></i>
+            <span class="visuallyhidden">Github</span></a>
+        </div>
+        <br>
+        <!-- <div class="google-maps-container centered"
+          aria-label="Google Map showing 245 Beacon St, Chestnut Hill, MA 02467">
+          <div class="google-maps" aria-hidden="true">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2949.373839650685!2d-71.1688963!3d42.33455239999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e379b294e1d789%3A0xc9b197dcd51ebc4a!2s245%20Beacon%20St%2C%20Chestnut%20Hill%2C%20MA%2002467!5e0!3m2!1sen!2sus!4v1663857321729!5m2!1sen!2sus"
+              width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div> -->
+        <br>
+        <div class="twiter-container centered">
+          <a class="twitter-timeline" data-height="750" href="https://twitter.com/Merterm">Tweets by Merterm</a>
+          <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>
+    Copyright © <span id="copyright-year"></span> Mert İnan.
+    <!-- The website code is <a href="https://github.com/namwkim/namwkim.github.io" target="_blank">here</a>.  -->
+    <!-- 3D models in the background by 
+    <a href="https://poly.google.com/user/b7jif2AAit5" target="_blank">Alex “SAFFY” Safayan</a> and
+    <a href="https://poly.google.com/user/1aLhJHbABkb" target="_blank">14islands Lab</a> are licensed under <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a> -->
+  </footer>
 </body>
-<a href='https://chingyaoc.github.io/'>Website template from here</a>
+
 </html>
