@@ -11,6 +11,14 @@ let md = new Remarkable();
 
 import { formatDate, getURL, getImgURL, renderNews, renderTravels, renderCourses, writeAddress } from './common.js';
 
+import { Gradient } from './Gradient.js'
+
+// Create your instance
+const gradient = new Gradient()
+
+// Call `initGradient` with the selector to your canvas
+gradient.initGradient('#gradient-canvas')
+
 Promise.all([
     'https://docs.google.com/spreadsheets/d/e/2PACX-1vRyIW6_Jj0sJaY2hsRlx90Fwu_LBos4BgFhaN8oQQGcb7hg-HY83i1amZlaOEUD_xHU9wCWEnJPCHjk/pub?gid=0&single=true&output=csv',
     'https://docs.google.com/spreadsheets/d/e/2PACX-1vRyIW6_Jj0sJaY2hsRlx90Fwu_LBos4BgFhaN8oQQGcb7hg-HY83i1amZlaOEUD_xHU9wCWEnJPCHjk/pub?gid=444772691&single=true&output=csv',
