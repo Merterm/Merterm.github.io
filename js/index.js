@@ -331,138 +331,138 @@ profileImage.addEventListener('mousemove', function (event) {
 });
 
 
-// function renderPeople(people, container, maxPeople = 20) {
-//     people = people.filter((d) => d["Position"] !== "Principal Investigator");
+function renderPeople(people, container, maxPeople = 20) {
+    people = people.filter((d) => d["Position"] !== "Principal Investigator");
 
-//     // console.log('render people', people);
+    // console.log('render people', people);
 
-//     const positions = [
-//         "Postdoctoral Fellow",
-//         "Research Associate",
-//         "Undergraduate Assistant",
-//     ];
-//     container.classList.add("people");
-//     container.innerHTML = "";
-//     people.sort((a, b) => {
-//         if (
-//             positions.indexOf(a["Position"]) > positions.indexOf(b["Position"])
-//         ) {
-//             return 1;
-//         }
-//         if (
-//             positions.indexOf(a["Position"]) < positions.indexOf(b["Position"])
-//         ) {
-//             return -1;
-//         }
-//         return 0;
-//     });
+    const positions = [
+        "Postdoctoral Fellow",
+        "Research Associate",
+        "Undergraduate Assistant",
+    ];
+    container.classList.add("people");
+    container.innerHTML = "";
+    people.sort((a, b) => {
+        if (
+            positions.indexOf(a["Position"]) > positions.indexOf(b["Position"])
+        ) {
+            return 1;
+        }
+        if (
+            positions.indexOf(a["Position"]) < positions.indexOf(b["Position"])
+        ) {
+            return -1;
+        }
+        return 0;
+    });
 
  
 
-//     const alumni = document.createElement("section");
-//     alumni.innerHTML = `
-//         <h4>Alumni</h4>
-//         <div class="alumni" role="list"></div>
-//     `;
+    const alumni = document.createElement("section");
+    alumni.innerHTML = `
+        <h4>Alumni</h4>
+        <div class="alumni" role="list"></div>
+    `;
 
-//     container.parentNode.insertBefore(alumni, container.nextSibling);
-//     // container.parentNode.appendChild(alumni);
-//     container.classList.add("alumni");
+    container.parentNode.insertBefore(alumni, container.nextSibling);
+    // container.parentNode.appendChild(alumni);
+    container.classList.add("alumni");
 
-//     const alumniContainer = alumni.querySelector(".alumni");
-//     alumniContainer.innerHTML = "";
+    const alumniContainer = alumni.querySelector(".alumni");
+    alumniContainer.innerHTML = "";
 
 
-//     // people
-//     // .filter((d) => d["Status"] === "Present")
-//     // .slice(0, maxPeople)
-//     // .forEach((item,i) => {
-//     //     let elem = document.createElement("div");
-//     //     elem.setAttribute("role", "listitem");
-//     //     console.log("item", item);
-//     //     elem.innerHTML = `
-//     // <a target="_blank"href="${item["Website"] ? item["Website"] : item["LinkedIn"]
-//     //         }">
-//     //     <img src="${!item["Photo"]
-//     //             ? "assets/images/person.png"
-//     //             : getURL(item["Photo"])
-//     //         }" alt="${item["Name"]}, ${item["Position"]}"/>
-//     //     <div class="person-detail" style="display:none">${item["Name"]
-//     //         }<br>${item["Position"]}</div>
-//     // </a>
-//     // `;
+    // people
+    // .filter((d) => d["Status"] === "Present")
+    // .slice(0, maxPeople)
+    // .forEach((item,i) => {
+    //     let elem = document.createElement("div");
+    //     elem.setAttribute("role", "listitem");
+    //     console.log("item", item);
+    //     elem.innerHTML = `
+    // <a target="_blank"href="${item["Website"] ? item["Website"] : item["LinkedIn"]
+    //         }">
+    //     <img src="${!item["Photo"]
+    //             ? "assets/images/person.png"
+    //             : getURL(item["Photo"])
+    //         }" alt="${item["Name"]}, ${item["Position"]}"/>
+    //     <div class="person-detail" style="display:none">${item["Name"]
+    //         }<br>${item["Position"]}</div>
+    // </a>
+    // `;
 
-//     //     setTimeout(function () {
+    //     setTimeout(function () {
 
-//     //         console.log("delayed loading", i*300);
-//     //         container.appendChild(elem);
-//     //         elem.classList.add("item");
-//     //         elem.addEventListener("mouseenter", showPersonDetail);
-//     //         elem.addEventListener("mouseleave", hidePersonDetail);
-//     //     }, i * 300);
+    //         console.log("delayed loading", i*300);
+    //         container.appendChild(elem);
+    //         elem.classList.add("item");
+    //         elem.addEventListener("mouseenter", showPersonDetail);
+    //         elem.addEventListener("mouseleave", hidePersonDetail);
+    //     }, i * 300);
 
-//     // });
-//     people
-//         .sort((d) => d["Status"] === "Alumni"?1:-1)
-//         .slice(0, maxPeople)
-//         .forEach((item, i) => {
-//             let elem = document.createElement("div");
-//             elem.setAttribute("role", "listitem");
-//             elem.innerHTML = `
-//         <a target="_blank"href="${item["Website"] ? item["Website"] : item["LinkedIn"]
-//                 }">
-//             <img src="${!item["Photo"]
-//                     ? "assets/images/person.png"
-//                     : getImgURL(item["Photo"])
-//                 }" alt="${item["Name"]}, ${item["Position"]}"/>
-//             <div class="person-detail" style="display:none">${item["Name"]
-//                 }<br>${item["Position"]}</div>
-//         </a>
-//         `;
+    // });
+    people
+        .sort((d) => d["Status"] === "Alumni"?1:-1)
+        .slice(0, maxPeople)
+        .forEach((item, i) => {
+            let elem = document.createElement("div");
+            elem.setAttribute("role", "listitem");
+            elem.innerHTML = `
+        <a target="_blank"href="${item["Website"] ? item["Website"] : item["LinkedIn"]
+                }">
+            <img src="${!item["Photo"]
+                    ? "assets/images/person.png"
+                    : getImgURL(item["Photo"])
+                }" alt="${item["Name"]}, ${item["Position"]}"/>
+            <div class="person-detail" style="display:none">${item["Name"]
+                }<br>${item["Position"]}</div>
+        </a>
+        `;
 
-//             setTimeout(function () {
-//                 console.log("delayed loading", i*250);
-//                 if (item["Status"] === "Present"){
-//                     container.appendChild(elem);
-//                 }else if (item["Status"] === "Alumni"){
-//                     alumniContainer.appendChild(elem);
-//                 }
+            setTimeout(function () {
+                console.log("delayed loading", i*250);
+                if (item["Status"] === "Present"){
+                    container.appendChild(elem);
+                }else if (item["Status"] === "Alumni"){
+                    alumniContainer.appendChild(elem);
+                }
                 
-//                 elem.classList.add("item");
-//                 elem.addEventListener("mouseenter", showPersonDetail);
-//                 elem.addEventListener("mouseleave", hidePersonDetail);
+                elem.classList.add("item");
+                elem.addEventListener("mouseenter", showPersonDetail);
+                elem.addEventListener("mouseleave", hidePersonDetail);
 
-//                 if (i===maxPeople-1 && maxPeople<people.length) {
-//                     const elipsis = document.createElement("span");
-//                     elipsis.innerHTML = `+${people.length-maxPeople}`;
-//                     elipsis.classList.add("ellipsis");
-//                     elipsis.setAttribute("style", "margin-top:5px;");
-//                     alumniContainer.appendChild(elipsis);
-//                 }
-//             }, i * 250);
-//         });
+                if (i===maxPeople-1 && maxPeople<people.length) {
+                    const elipsis = document.createElement("span");
+                    elipsis.innerHTML = `+${people.length-maxPeople}`;
+                    elipsis.classList.add("ellipsis");
+                    elipsis.setAttribute("style", "margin-top:5px;");
+                    alumniContainer.appendChild(elipsis);
+                }
+            }, i * 250);
+        });
 
 
-// }
+}
 
-// function showPersonDetail(event) {
-//     // event.target.style.zIndex = 1;
-//     // const img = event.target.querySelector('img');
-//     // img.style.width = "64px";
-//     // img.style.height = "64px";
-//     // img.classList.add('selected');
+function showPersonDetail(event) {
+    // event.target.style.zIndex = 1;
+    // const img = event.target.querySelector('img');
+    // img.style.width = "64px";
+    // img.style.height = "64px";
+    // img.classList.add('selected');
 
-//     const detail = event.target.querySelector(".person-detail");
-//     detail.style.display = "block";
-// }
-// function hidePersonDetail(event) {
-//     // event.target.style.zIndex = 0;
-//     // const img = event.target.querySelector('img');
-//     // img.style.width = "32px";
-//     // img.style.height = "32px";
-//     // img.classList.remove('selected');
+    const detail = event.target.querySelector(".person-detail");
+    detail.style.display = "block";
+}
+function hidePersonDetail(event) {
+    // event.target.style.zIndex = 0;
+    // const img = event.target.querySelector('img');
+    // img.style.width = "32px";
+    // img.style.height = "32px";
+    // img.classList.remove('selected');
 
-//     const detail = event.target.querySelector(".person-detail");
-//     detail.style.display = "none";
-// }
+    const detail = event.target.querySelector(".person-detail");
+    detail.style.display = "none";
+}
 
