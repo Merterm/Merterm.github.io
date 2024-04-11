@@ -317,7 +317,7 @@ pubSearch.addEventListener('input', function (event) {
 
 let profileImage = document.querySelector('.profile-image');
 
-let numImages = 3;
+let numImages = 4;
 let randIdx = Math.floor(Math.random() * numImages) + 1;
 profileImage.src = `/assets/images/profile/photo${randIdx}.png`;
 profileImage.addEventListener('mousemove', function (event) {
