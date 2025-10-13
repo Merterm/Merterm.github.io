@@ -314,16 +314,88 @@ pubSearch.addEventListener('input', function (event) {
     }
 });
 
+function getWeightedRandomIndex(numImages) {
+    // 1. Define specific weights and a baseline weight for all others
+    const specificWeights = {
+        4: 5, // Highest weight
+        7: 4,
+        6: 3
+    };
+    const BASE_WEIGHT = 1;
+
+    // 2. Build the cumulative weight array
+    const cumulativeWeights = [];
+    let totalWeight = 0;
+
+    for (let i = 1; i <= numImages; i++) {
+        const weight = specificWeights[i] || BASE_WEIGHT;
+        totalWeight += weight;
+        cumulativeWeights.push({ index: i, cumulative: totalWeight });
+    }
+
+    // 3. Generate random value and find the index
+    const randomValue = Math.random() * totalWeight;
+
+    for (const item of cumulativeWeights) {
+        if (randomValue < item.cumulative) {
+            return item.index;
+        }
+    }
+
+    // Fallback for safety (though unlikely to be hit)
+    return Math.floor(Math.random() * numImages) + 1;
+}
 
 let profileImage = document.querySelector('.profile-image');
 
-let numImages = 5;
-let randIdx = Math.floor(Math.random() * numImages) + 1;
+let numImages = 7;
+
+const specificWeights = {
+    4: 5,
+    7: 4,
+    6: 3
+};
+const BASE_WEIGHT = 1;
+
+// Build the cumulative weight array and total weight once
+const cumulativeWeights = [];
+let totalWeight = 0;
+
+for (let i = 1; i <= numImages; i++) {
+    const weight = specificWeights[i] || BASE_WEIGHT;
+    totalWeight += weight;
+    cumulativeWeights.push({ index: i, cumulative: totalWeight });
+}
+
+// let randIdx = Math.floor(Math.random() * numImages) + 1;
+let randIdx = getWeightedRandomIndex(numImages);
 profileImage.src = `/assets/images/profile/photo${randIdx}.png`;
 profileImage.addEventListener('mousemove', function (event) {
+    // let x = event.clientX - this.offsetLeft;
+    // let y = event.clientY - this.offsetTop;
+    // let idx = Math.floor(x / (this.width / numImages)) + 1;
+    // if (idx >= 1 && idx <= numImages) {
+    //     profileImage.src = `/assets/images/profile/photo${idx}.png`;
+    // }
+
     let x = event.clientX - this.offsetLeft;
-    let y = event.clientY - this.offsetTop;
-    let idx = Math.floor(x / (this.width / numImages)) + 1;
+
+    // 1. Calculate the normalized mouse position (0 to 1)
+    const normalizedPosition = x / this.width;
+
+    // 2. Map the normalized position to the Total Weight range (0 to totalWeight)
+    const weightedValue = normalizedPosition * totalWeight;
+
+    // 3. Find the index that corresponds to the weighted value
+    let idx;
+    for (const item of cumulativeWeights) {
+        if (weightedValue < item.cumulative) {
+            idx = item.index;
+            break; // Found the index, exit the loop
+        }
+    }
+
+    // 4. Update the image source
     if (idx >= 1 && idx <= numImages) {
         profileImage.src = `/assets/images/profile/photo${idx}.png`;
     }

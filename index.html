@@ -64,17 +64,98 @@
 </head>
 <style>
   body {
-    background-image: url("images/gray-clean-paperboard.jpg"); /* Replace with your image path */
+    background-image: url("images/textured-mulberry-paper.jpg"); /* Replace with your image path */
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed; /* Optional: Keep background fixed while scrolling */
     background-position: center center; /* Optional: Center the background image */
   }
+
+  .bio-frame {
+    /* Frame styling */
+    border: 2px solid #006d77;
+    border-radius: 8px;
+    padding: 30px;
+    margin: 20px auto;
+    max-width: 900px;
+    background-color: #EAE9E5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    /* Optional: Add a subtle background pattern or color */
+    background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+        z-index: 0;
+}
+
+/* Updated title styling - Solution 1: Positive z-index approach */
+.title {
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    font-weight: 100;
+    position: relative;
+    display: inline-block; /* Changed from table to inline-block */
+    padding: 0 5px;
+    /* Create isolation for stacking context */
+    isolation: isolate;
+}
+
+.title::after {
+    content: '';
+    background-color: #83c5be;
+    height: 30%;
+    position: absolute;
+    top: 65%;
+    left: 0;
+    width: 100%;
+    z-index: -1; /* This now works within the isolated context */
+    pointer-events: none; /* Ensure it doesn't interfere with text selection */
+}
+
+/* Alternative Solution 2: Using ::before instead of ::after */
+.title-alt {
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    font-weight: 100;
+    position: relative;
+    display: inline-block;
+    padding: 0 5px;
+}
+
+/* Alternative frame style with double border */
+.bio-frame-double {
+    border: 3px double #444;
+    padding: 35px;
+    margin: 25px auto;
+    max-width: 900px;
+    background-color: #fafafa;
+}
+
+/* Alternative frame style with shadow effect */
+.bio-frame-shadow {
+    border: 1px solid #ddd;
+    padding: 40px;
+    margin: 30px auto;
+    max-width: 900px;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    .bio-frame,
+    .bio-frame-double,
+    .bio-frame-shadow {
+        margin: 10px;
+        padding: 20px;
+    }
+}
 </style>
 <body>
   <div class="canvas-container"></div>
 
+  
   <header class="container">
+    <div class="bio-frame">
     <h1 class="title">Mert İnan</h1>
     <div class="row">
       <section class="column">
@@ -112,19 +193,22 @@
         <p> My research and background is transdisciplinary. I am currently interested in investigating cognitively-aware multimodal dialogue systems, sign language processing, and NeuroRoboNLP. I enjoy combining linguistics, cognitive neuroscience, and natural language processing through state-of-the-art machine learning applications.</p>
 	     <!-- <p> I see my research as a gradient: </p> 
 	      <img src="https://merterm.github.io/images/research_interest.png" style="width: 100%; object-fit: contain" /> --!>
-<!--         <p style="position: relative;">
+        <!-- <p style="position: relative;">
           <img src="https://merterm.github.io/images/research_interest.png" style='height: 100%; width: 100%; object-fit: contain; position: absolute'>
           <canvas id="gradient-canvas" data-transition-in />
         </p> -->
       </section>
     </div>
-
+    </div>
   </header>
+  
+
   <main class="row container">
 
     <div class="column">
       <section>
         <h2 class="title">Publications</h2>
+        <div class="bio-frame">
         <div class="search">
           <!-- <label for="search-news" class="visuallyhidden">Search Publications</label> -->
           <input type="text" name='publication' placeholder="Search Publications..." aria-label="search publications">
@@ -155,6 +239,7 @@
 
         </div>
       </section>
+      </div>
     </div>
     <div class="column">
       <!-- <section>
@@ -166,6 +251,7 @@
       </section> -->
       <section class="column">
         <h2 class="title">News</h2>
+        <div class="bio-frame">
         <div class="search">
           <!-- <label for="search-news" class="visuallyhidden">Search News</label> -->
 
@@ -176,29 +262,44 @@
 
         </div>
         <div><a class="see-all" href="/detail/?page=news">See All News ... </a></div>
+        </div>
       </section>
       <section>
         <h2 class="title">Travels</h2>
+        <div class="bio-frame">
         <div class="search">
           <input type="text" name='travel' placeholder="Search Travels..." aria-label="search travels">
         </div>
-        <div class="travels" role="list">
-
-        </div>
+        <div class="travels" role="list"></div>
         <div><a class="see-all" href="/detail/?page=travel">See All Travels ... </a></div>
+        </div>
       </section>
       <section>
         <h2 class="title">Books</h2>
+        <div class="bio-frame">
+        <!-- Add the 0_Bgs_movie.gif and the book title and the authors -->
+         <div class='pub' role="listitem">
+                <div class='pub-teaser'>
+                    <img class='pub-image' src='/images/0_Bgs_movie_cropped.gif' alt='The Book of Why: The New Science of Cause and Effect by Judea Pearl and Dana Mackenzie' style="height: 150px; width: auto; object-fit: contain;">
+                </div>
+                <div class='pub-detail', style="margin-left: 100px;">
+                    <div class='pub-title'><strong>Biological Modeling: A Short Tour</strong></div>
+                    <div class='pub-authors'>Phillip Compeau, <strong>Mert Inan</strong>, Noah Lee, Shuanger Li, Chris Lee</div>
+                    <div class='pub-venue'><em>Philomath Press</em></div>
+                </div>
+            </div>
+        </div>
       </section>
       <section>
         <h2 class="title">Teaching</h2>
-        <div class="courses" role="list">
-
-        </div>
+        <div class="bio-frame">
+        <div class="courses" role="list"></div>
         <div><a class="see-all" href="/detail/?page=teaching">See All Courses ... </a></div>
+        </div>
       </section>
       <section>
         <h2 class="title">Contact</h2>
+        <div class="bio-frame">
         <div class="profile-item email">
           inan dot m at northeastern dot edu
         </div>
@@ -239,6 +340,7 @@
           <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
 	-->
+        </div>
       </section>
     </div>
   </main>
