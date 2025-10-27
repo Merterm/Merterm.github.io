@@ -319,7 +319,7 @@ function getWeightedRandomIndex(numImages) {
     const specificWeights = {
         4: 5, // Highest weight
         7: 4,
-        6: 3
+        6: 0
     };
     const BASE_WEIGHT = 1;
 
@@ -353,7 +353,7 @@ let numImages = 7;
 const specificWeights = {
     4: 5,
     7: 4,
-    6: 3
+    6: 0
 };
 const BASE_WEIGHT = 1;
 
