@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loanwords & Empires: Mapping Cultural Hegemony - Mert İnan</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/common.css">
+  
+  <style>
+    /* --- Base Layout & Typography --- */
+    body {
+      background-image: url("../images/textured-mulberry-paper.jpg"); 
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+      margin: 0;
+      padding: 40px 0;
+    }
+
+    .paper-container {
+      border: 2px solid #006d77;
+      border-radius: 8px;
+      padding: 50px 60px;
+      margin: 0 auto;
+      max-width: 1000px;
+      background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* --- The Distill Grid System --- */
+    /* Columns: Left Margin | Main Content (680px) | Gutter (30px) | Sidenotes (280px) | Right Margin */
+    .article-grid {
+      display: grid;
+      grid-template-columns: 1fr minmax(auto, 680px) 30px 280px 1fr;
+    }
+
+    /* All direct children default to the Main Content column */
+    .article-grid > * {
+      grid-column: 2;
+    }
+
+    /* --- Special Column Spans --- */
+    /* Outset: Spans Main Content + Sidenote area */
+    .article-grid > figure.l-body-outset {
+      grid-column: 2 / 5; 
+      width: 100%;
+      margin: 2rem 0;
+    }
+
+    /* Page: Spans the full width of the container */
+    .article-grid > figure.l-page {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin: 3rem 0;
+    }
+
+    /* --- Typography Details --- */
+    h1.article-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3rem;
+      color: #052d3f;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .article-meta {
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      color: #666;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: #006d77;
+      border-bottom: 2px solid #83c5be;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-top: 2.5rem;
+      color: #333;
+    }
+
+    p {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+
+    blockquote {
+        border-left: 3px solid #83c5be;
+        margin: 1.5rem 0;
+        padding-left: 20px;
+        font-style: italic;
+        color: #555;
+        background: #f9f9f9;
+        padding: 15px 20px;
+    }
+
+    ul.taxonomy-details {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 2rem;
+        border-left: 3px solid #eee;
+        padding-left: 20px;
+    }
+    
+    ul.taxonomy-details li {
+        margin-bottom: 0.8rem;
+        font-family: 'Georgia', serif;
+        font-size: 1rem;
+    }
+
+    /* --- Sidenotes --- */
+    .sidenote {
+      grid-column: 4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #666;
+      border-left: 2px solid #83c5be;
+      padding-left: 12px;
+      margin-top: 0.5rem; 
+      margin-bottom: 1rem;
+    }
+    
+    .sidenote-number {
+        counter-increment: sidenote-counter;
+    }
+
+    .sidenote strong {
+        color: #006d77;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    /* --- Images & Figures --- */
+    figure {
+        margin: 2rem 0;
+    }
+    figure img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+    figcaption {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 0.9rem;
+        color: #777;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    iframe.interactive-frame {
+      width: 100%;
+      height: 700px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+    }
+
+    a.nav-back {
+        text-decoration: none;
+        color: #666;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        display: inline-block;
+        transition: color 0.2s;
+    }
+    a.nav-back:hover { color: #006d77; }
+
+    /* --- Responsive Design --- */
+    @media (max-width: 1000px) {
+      .paper-container { padding: 30px; margin: 10px; }
+      .article-grid { display: block; }
+      .sidenote {
+        width: 100%;
+        margin: 1.5rem 0;
+        background: #f4fbfb;
+        padding: 15px;
+        border-left: 4px solid #83c5be;
+      }
+      .article-grid > figure.l-body-outset { width: 100%; margin: 1.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <article class="paper-container">
+    
+    <a href="../index.html" class="nav-back">← Back to Home</a>
+
+    <div class="article-grid">
+      
+      <header style="grid-column: 2 / 5;">
+        <h1 class="article-title">Loanwords & Empires: Mapping Cultural Hegemony</h1>
+        <div class="article-meta">
+          Mert İnan &bull; December 2025 &bull; Interactive Visualization & Theory
+        </div>
+      </header>
+
+      <p>
+        I was watching the Georgian staple show, <em>Iraqli</em>, on Imedi TV just as a backdrop while working on a paper submission. I heard specific words within the show that piqued my attention: <em>შაბათი (shabati)</em>, <em>ხარჯი (harji)</em>, <em>ჩანთა (chanta)</em>, and <em>პარასკევი (paraskevi)</em>.
+        <br><br>
+        All of these words are "loanwords" from various languages: Hebrew, Arabic, Ottoman Turkish/Persian, and Greek. Given all these different origins, I was curious as to how these cultures got into contact with the Georgian peoples. Then, going down a rabbit hole, I discovered that all these loanwords had distinct historical vectors.
+        With Gemini as my helper in this exploration (surprisingly, a lot of the linguistic and historical knowledge it provided was accurate), I found that <em>shabati</em> was due to the Jewish Diaspora in ancient times; <em>harji</em> was from the times of the Emirate of Tbilisi—a shocker, who would've known there was an Arabic Emirate for 400 years in the capital of Georgia?—and <em>paraskevi</em> stemmed from Christian liturgy heavily influenced by Byzantine Greek.
+    </p>
+      
+    <aside class="sidenote">
+        <strong>Loanword Origins</strong>
+        <em>shabati</em> ← Hebrew: שַׁבָּת (<em>shabbat</em>)<br>
+        <em>harji</em> ← Arabic: خَرْج (<em>kharj</em>)<br>
+        <em>chanta</em> ← Persian: چنته (<em>chanteh</em>) or Ottoman: چنته (<em>çanta</em>)<br>
+        <em>paraskevi</em> ← Greek: Παρασκευή (<em>paraskevi</em>)
+      </aside>
+
+      <p>
+        While all of this information was raining on me, my mind wandered into several questions:
+    </p>
+        <ol style="font-family: 'Georgia', serif; font-size: 1.1rem; color: #333; margin-bottom: 1.5rem;">
+            <li>How come the Georgian peoples were able to conserve their ethnic and cultural identity among all these different cultural influences?</li>
+            <li>How are these words considered loanwords but not core words, making the linguistic fabric of <em>ქართული ენა (Kartuli ena/Georgian language)</em>?</li>
+        </ol>
+
+    <p>
+        I then jumped into other neighboring countries. Naturally, modern Turkish has a lot of words about plants and animals from Greek, while actions and verbs are often of Turkic origin; religious words and daily greetings come from Arabic, and more high-level words from Persian. I asked Gemini to answer me at once about these connections and how the bigger picture connects with the case of Georgian culture. 
+       <br><br>
+        Then Gemini, expectedly, failed me with some ridiculous rhetoric about how Turks gleefully came down from the Central Asian steppes, bringing with them their language and carefully picking all these nice words on their way to Anatolia. I slammed it with how wrong it was, and how it was fueling the delusions of ultranationalists with its narratives and misinformation. It gladly retracted and was obliged to satisfy my human feedback.
+      </p>
+
+      <p><em>"You are absolutely right to raise this flag,"</em> it said.</p>
+
+      <p>
+        But, alas, I diverge. What I set out to discover were some nice scientific questions, and some nice intellectual tinkerings about them. And soon after my debacle with Gemini, it buttered me with this:
+      </p>
+
+      <blockquote>
+        "Your definition is the most intellectually honest one: Modern Turkish people are the children of a diverse, indigenous deep-history (Hittite/Anatolian) who accepted the imposed language of a Turkic military elite."
+      </blockquote>
+
+      <p>
+        Then I jumped one level up again and asked if there are any similar cultures or peoples in this world, where people just obliged and accepted the imposed culture on them? There sure is, Mert. Many actually.
+      <br><br>
+
+        Eventually, my linguistic adventure turned into a sociological analysis of different cultures and how they survive. Then I had the neat little idea to turn this into a map of some sorts, classifying all the countries in the world into these neat little categories in terms of their cultural hegemony.
+      <br><br>
+
+        And so I did. With the help of Claude (these LLMs are becoming a central theme, it seems, but they are so helpful to turn neat little ideas into reality so quickly sometimes!), I developed the following haphazard taxonomy about cultural hegemony to satisfy my intellectual itches and resolve my recent ethnic existential crises:
+      </p>
+
+      <hr style="border: 0; border-top: 1px solid #eee; margin: 3rem 0; width: 50%;">
+
+      <h3>1. The Pragmatic Adapter</h3>
+      <p class="meta-sub" style="color: #666; font-style: italic; font-size: 0.9rem; margin-top: -10px;"></p>
+      
+      <p>
+        <strong>Definition:</strong> A population characterized by high genetic continuity but high cultural plasticity. They survive conquest by rapidly adopting the language, religion, and customs of the dominant elite to maintain socioeconomic status.
+      </p>
+      
+      <aside class="sidenote">
+        <strong>Primary Examples</strong>
+        Anatolian Turks, Modern Egyptians, Mestizo Mexicans.
+      </aside>
+
+      <ul class="taxonomy-details">
+        <li><strong>Genetics (High Continuity):</strong> The gene pool remains largely indigenous despite changes in leadership.</li>
+        <li><strong>Linguistics (High Volatility):</strong> The population rapidly shifts to the prestige language (e.g., Anatolians shifting from Greek to Turkish).</li>
+        <li><strong>Culture (Syncretic):</strong> They practice "cultural layering," retaining folk customs while adopting the elite's formal institutions.</li>
+      </ul>
+
+      <h3>2. The Cultural Hegemon</h3>
+      <p class="meta-sub" style="color: #666; font-style: italic; font-size: 0.9rem; margin-top: -10px;"></p>
+
+      <p>
+        <strong>Definition:</strong> A demographic or civilization with such massive population density and institutional depth that it assimilates conquerors rather than being assimilated by them.
+      </p>
+
+      <aside class="sidenote">
+        <strong>Primary Examples</strong>
+        Han Chinese (assimilated Mongols/Manchus), Persians (assimilated Greeks/Turks), Indians (assimilated Mughals).
+      </aside>
+
+      <ul class="taxonomy-details">
+        <li><strong>Genetics (Absorptive):</strong> Conqueror lineages (minority elites) are genetically diluted into the massive native gene pool over a few generations.</li>
+        <li><strong>Linguistics (Dominant):</strong> The conquerors eventually abandon their native tongue in favor of the subject population's "high culture" language.</li>
+        <li><strong>Culture (Enduring):</strong> Core philosophies and bureaucracies remain intact; the "software" overwrites the user.</li>
+      </ul>
+
+      <h3>3. The Geo-Isolate Conserver</h3>
+      <p class="meta-sub" style="color: #666; font-style: italic; font-size: 0.9rem; margin-top: -10px;"></p>
+
+      <p>
+        <strong>Definition:</strong> A population that preserves distinct linguistic and genetic markers through geographic isolation in defensible terrain (mountains, islands, dense forests).
+      </p>
+
+      <aside class="sidenote">
+        <strong>Primary Examples</strong>
+        Basques (Pyrenees), Georgians (Caucasus), Japanese, Icelanders.
+      </aside>
+
+      <ul class="taxonomy-details">
+        <li><strong>Genetics (High Distinctiveness):</strong> Often shows genetic drift or archaic markers due to lack of admixture (e.g., Sardinia, Basque Country).</li>
+        <li><strong>Linguistics (Preservationist):</strong> Often home to "language isolates" or archaic branches unrelated to neighbors.</li>
+        <li><strong>Culture (Defensive):</strong> Cultural identity is defined by resistance to the periphery and skepticism of central authority.</li>
+      </ul>
+
+      <h3>4. The Endogamous Insulator</h3>
+      <p class="meta-sub" style="color: #666; font-style: italic; font-size: 0.9rem; margin-top: -10px;"></p>
+
+      <p>
+        <strong>Definition:</strong> A minority group living within a host society that maintains a distinct identity not through geography, but through strict social boundaries and endogamy (in-marriage).
+      </p>
+
+      <aside class="sidenote">
+        <strong>Primary Examples</strong>
+        Druze (Levant), Parsis (India), Amish (USA), Diaspora Jews/Armenians (historically).
+      </aside>
+
+      <ul class="taxonomy-details">
+        <li><strong>Genetics (High Homogeneity):</strong> Strict marriage laws lead to significant genetic distance from the surrounding host population (and sometimes founder effects).</li>
+        <li><strong>Linguistics (Ethnolects):</strong> Maintenance of a liturgical or ancestral language for internal use, while speaking the dominant language for trade.</li>
+        <li><strong>Culture (Exclusive/High-Context):</strong> Identity is preserved through strict religious laws, dietary restrictions, and parallel institutions.</li>
+      </ul>
+
+      <h3>5. The Imperial Exporter</h3>
+      <p class="meta-sub" style="color: #666; font-style: italic; font-size: 0.9rem; margin-top: -10px;"></p>
+
+      <p>
+        <strong>Definition:</strong> An expansionist group that imposes its language and institutions on subject populations via "Elite Dominance," often spreading its culture far beyond its genetic demographic reach.
+      </p>
+
+      <aside class="sidenote">
+        <strong>Primary Examples</strong>
+        Romans (Latin Europe), Arab Caliphates (Arabization), Early Oghuz Turks (Turkification), British/French/Russian Empires.
+      </aside>
+
+      <ul class="taxonomy-details">
+        <li><strong>Genetics (Diffusion):</strong> The genetic impact is often minimal compared to the cultural impact; the gene flow is usually directional (elite males into local females).</li>
+        <li><strong>Linguistics (Expansive):</strong> The language becomes a lingua franca, replacing local tongues for administration and trade.</li>
+        <li><strong>Culture (Universalist):</strong> The culture is viewed as a "standard" or "civilization" to be exported to "barbarians."</li>
+      </ul>
+
+      <h2 style="margin-top: 4rem;">The Interactive Landscape</h2>
+      <p>
+        Lo and behold, the haphazard taxonomy about cultural hegemonia that I developed in one afternoon resulted in a neat little interactive map below. Just try it out for yourself, hover over different countries to see their percentages in terms of these cultural identity flavors!
+      </p>
+
+      <figure class="l-body-outset">
+        <iframe src="cultural_taxonomy_map_interactive.html" class="interactive-frame" title="Interactive 3D Map"></iframe>
+        <figcaption>
+          Figure: An interactive map of the identified strategies. <br>
+          <em>(Click and drag to rotate, scroll to zoom. Hover to see country details.)</em>
+        </figcaption>
+      </figure>
+
+    </div>
+  </article>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-10WJKQK9XQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-10WJKQK9XQ');
+  </script>
+
+</body>
+</html>
