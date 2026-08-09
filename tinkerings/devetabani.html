@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Amazons to Salons: The Story of the Devetabanı - Mert İnan</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
+  
+  <!-- Leaflet CSS for the interactive map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <link rel="stylesheet" href="../assets/css/common.css">
+  
+  <style>
+    /* --- Base Layout & Typography --- */
+    body {
+      background-image: url("../images/textured-mulberry-paper.jpg"); 
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+      margin: 0;
+      padding: 40px 0;
+      background-color: #f4ece6; /* Fallback */
+    }
+
+    .paper-container {
+      border: 2px solid #006d77;
+      border-radius: 8px;
+      padding: 50px 60px;
+      margin: 0 auto;
+      max-width: 1000px;
+      background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1; /* Keep the article above the floating leaves */
+    }
+
+    /* --- The Distill Grid System --- */
+    .article-grid {
+      display: grid;
+      grid-template-columns: 1fr minmax(auto, 680px) 30px 280px 1fr;
+    }
+
+    .article-grid > * {
+      grid-column: 2;
+    }
+
+    /* Outset: Spans Main Content + Sidenote area */
+    .article-grid > figure.l-body-outset {
+      grid-column: 2 / 5; 
+      width: 100%;
+      margin: 2rem 0;
+    }
+
+    /* --- Typography Details --- */
+    h1.article-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3rem;
+      color: #052d3f;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .article-meta {
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      color: #666;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: #006d77;
+      border-bottom: 2px solid #83c5be;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-top: 2.5rem;
+      color: #333;
+    }
+
+    p {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+
+    /* --- Sidenotes and Figures --- */
+    .sidenote {
+      grid-column: 4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #666;
+      border-left: 2px solid #83c5be;
+      padding-left: 12px;
+      margin-top: 0.5rem; 
+      margin-bottom: 1rem;
+    }
+
+    .sidenote strong {
+        color: #006d77;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    figure { margin: 2rem 0; }
+    
+    figure img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+    
+    figcaption {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 0.9rem;
+        color: #777;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    a.nav-back {
+        text-decoration: none;
+        color: #666;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        display: inline-block;
+        transition: color 0.2s;
+    }
+    a.nav-back:hover { color: #006d77; }
+
+    /* --- Specific Features for this Page --- */
+    
+    /* Multilingual passes: highlighted gracefully */
+    .tr-term {
+        font-style: italic;
+        color: #006d77;
+        font-weight: 500;
+    }
+
+    /* Vintage Photo Gallery */
+    .photo-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin: 2rem 0;
+    }
+    
+    .vintage-photo {
+        background: #fff;
+        padding: 10px 10px 30px 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border: 1px solid #eaeaea;
+        width: 220px;
+        transform: rotate(-2deg);
+        transition: transform 0.3s ease;
+    }
+    .vintage-photo:nth-child(2) { transform: rotate(1.5deg); }
+    .vintage-photo:nth-child(3) { transform: rotate(-1deg); }
+    .vintage-photo:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+    
+    .vintage-photo img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        filter: sepia(0.3) contrast(1.05);
+    }
+    
+    .photo-caption {
+        text-align: center;
+        font-size: 0.85em;
+        margin-top: 10px;
+        color: #555;
+        font-family: 'Georgia', serif;
+        font-style: italic;
+    }
+
+    /* --- Styling the Leaflet Map --- */
+    #botanical-map {
+        height: 600px;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #e5e3df;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        z-index: 1; /* Keep below popups */
+    }
+
+    /* Override leaflet popup fonts */
+    .leaflet-popup-content-wrapper {
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .leaflet-popup-content {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        margin: 16px;
+        line-height: 1.5;
+    }
+    .map-popup-img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+    }
+
+    /* --- Timeline & Map Path Styles --- */
+    .timeline {
+        grid-column: 2;
+        margin: 4rem 0 2rem 0;
+        position: relative;
+        padding-left: 30px;
+        border-left: 3px solid #83c5be;
+    }
+    
+    .timeline-event {
+        position: relative;
+        margin-bottom: 2.5rem;
+    }
+    
+    .timeline-event::before {
+        content: '';
+        position: absolute;
+        left: -39px;
+        top: 0;
+        width: 15px;
+        height: 15px;
+        background: #006d77;
+        border: 3px solid #f4ece6;
+        border-radius: 50%;
+    }
+    
+    .timeline-date {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: #006d77;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .timeline-content {
+        font-family: 'Georgia', serif;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    .timeline-content strong {
+        color: #052d3f;
+    }
+
+    .path-label-box {
+        background: white;
+        border: 2px solid #006d77;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: bold;
+        color: #006d77;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        pointer-events: none;
+    }
+
+    .floating-leaves {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0; /* Keep above body background, but below .paper-container */
+      overflow: hidden;
+    }
+
+    .leaf-icon {
+      position: absolute;
+      opacity: 0.25;
+      animation: gentleSway 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes gentleSway {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-25px) rotate(8deg); }
+    }
+
+    /* Move leaves strictly to the far margins */
+    .leaf-1 { top: 15%; left: 2%; width: 120px; animation-duration: 8s; }
+    .leaf-2 { top: 40%; right: 2%; width: 90px; animation-duration: 10s; animation-delay: -2s; }
+    .leaf-3 { top: 75%; left: 2%; width: 150px; animation-duration: 7s; animation-delay: -4s; }
+    .leaf-4 { top: 10%; right: 4%; width: 110px; animation-duration: 9s; animation-delay: -1s; }
+    .leaf-5 { bottom: 5%; right: 2%; width: 130px; animation-duration: 11s; animation-delay: -5s; }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .paper-container { padding: 30px; margin: 10px; }
+      .article-grid { display: block; }
+      .sidenote {
+        width: 100%;
+        margin: 1.5rem 0;
+        background: #f4fbfb;
+        padding: 15px;
+        border-left: 4px solid #83c5be;
+      }
+      .article-grid > figure.l-body-outset { width: 100%; margin: 1.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="floating-leaves">
+    <!-- Monstera (Devetabanı) 1 -->
+    <svg class="leaf-icon leaf-1" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 50,100 
+               C 50,90 48,75 45,65 
+               C 35,68 25,72 15,75 
+               C 10,70 8,60 12,53 
+               C 22,53 32,54 41,55 
+               C 34,45 24,35 12,28 
+               C 12,20 18,12 26,14 
+               C 34,22 40,32 44,43 
+               C 43,30 40,18 38,5 
+               C 46,3 54,3 62,5 
+               C 60,18 57,30 56,43 
+               C 60,32 66,22 74,14 
+               C 82,12 88,20 88,28 
+               C 76,35 66,45 59,55 
+               C 68,54 78,53 88,53 
+               C 92,60 90,70 85,75 
+               C 75,72 65,68 55,65 
+               C 52,75 50,90 50,100 Z" 
+            fill="#006d77" opacity="0.15" />
+      <path d="M 50,105 C 50,85 49,55 46,25" 
+            stroke="#052d3f" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            fill="none" opacity="0.25" />
+    </svg>
+    
+    <!-- Kauçuk (Rubber Plant) 1 -->
+    <svg class="leaf-icon leaf-2" viewBox="0 0 24 24" fill="none" stroke="#83c5be" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleX(-1);">
+      <path d="M12 22V2" />
+      <path d="M12 2C7.5 2 5 6 5 12c0 6 3 9 7 9s7-3 7-9c0-6-2.5-10-7-10z" />
+      <path d="M12 6L8 5" /><path d="M12 10L7 8" /><path d="M12 14L8 12" />
+      <path d="M12 7l4-1" /><path d="M12 11l5-2" /><path d="M12 15l4-1" />
+    </svg>
+
+    <!-- Benjamin (Weeping Fig) -->
+    <svg class="leaf-icon leaf-3" viewBox="0 0 24 24" fill="none" stroke="#006d77" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22C12 22 10 12 3 8C8 7 12 12 12 12C12 12 16 7 21 8C14 12 12 22 12 22Z" />
+      <path d="M12 12v10" />
+    </svg>
+
+    <!-- Monstera (Devetabanı) 2 -->
+    <svg class="leaf-icon leaf-4" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 50,100 
+               C 50,90 48,75 45,65 
+               C 35,68 25,72 15,75 
+               C 10,70 8,60 12,53 
+               C 22,53 32,54 41,55 
+               C 34,45 24,35 12,28 
+               C 12,20 18,12 26,14 
+               C 34,22 40,32 44,43 
+               C 43,30 40,18 38,5 
+               C 46,3 54,3 62,5 
+               C 60,18 57,30 56,43 
+               C 60,32 66,22 74,14 
+               C 82,12 88,20 88,28 
+               C 76,35 66,45 59,55 
+               C 68,54 78,53 88,53 
+               C 92,60 90,70 85,75 
+               C 75,72 65,68 55,65 
+               C 52,75 50,90 50,100 Z" 
+            fill="#006d77" opacity="0.15" />
+      <path d="M 50,105 C 50,85 49,55 46,25" 
+            stroke="#052d3f" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            fill="none" opacity="0.25" />
+    </svg>
+    
+    <!-- Kauçuk (Rubber Plant) 2 -->
+    <svg class="leaf-icon leaf-5" viewBox="0 0 24 24" fill="none" stroke="#006d77" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22V2" />
+      <path d="M12 2C7.5 2 5 6 5 12c0 6 3 9 7 9s7-3 7-9c0-6-2.5-10-7-10z" />
+      <path d="M12 6L8 5" /><path d="M12 10L7 8" /><path d="M12 14L8 12" />
+      <path d="M12 7l4-1" /><path d="M12 11l5-2" /><path d="M12 15l4-1" />
+    </svg>
+  </div>
+
+  <article class="paper-container">
+    
+    <a href="../index.html" class="nav-back">← Back to Home</a>
+
+    <div class="article-grid">
+      
+      <header style="grid-column: 2 / 5;">
+        <h1 class="article-title">From Amazons to Salons: The Story of the Delicious and Monstrous Devetabanı</h1>
+        <div class="article-meta">
+          Mert İnan &bull; August 2026 &bull; Cultural History & Botany
+        </div>
+      </header>
+
+      <p>
+        It is fascinating that while growing up, my grandmas had <span class="tr-term">devetabanı</span>, giant <span class="tr-term">kauçuk</span> and many <span class="tr-term">benjamin</span> plants in their apartments. Some might say this was the precursor of the eco-brutalist aesthetic with the concrete apartments in combination with tropical florals. 
+      </p>
+
+      <aside class="sidenote">
+        <strong>What's in a name?</strong>
+        <em>Devetabanı</em> (Camel's Foot) is the Turkish name for <em>Monstera deliciosa</em>, named for its massive, split leaves. <em>Kauçuk</em> is the Rubber Fig (<em>Ficus elastica</em>), and <em>Benjamin</em> is the Weeping Fig (<em>Ficus benjamina</em>).
+      </aside>
+
+      <figure class="l-body-outset photo-gallery">
+        <!-- INSTRUCTIONS: Swap the src="" links below with your direct Google Photos URLs -->
+        <div class="vintage-photo">
+            <img src="https://placehold.co/400x500/d9d0c1/5a4d41?text=Grandma+House+1" alt="Vintage apartment plant photo 1">
+            <div class="photo-caption">Devetabanı by the window</div>
+        </div>
+        <div class="vintage-photo">
+            <img src="https://placehold.co/400x500/e6ddcc/5a4d41?text=Grandma+House+2" alt="Vintage apartment plant photo 2">
+            <div class="photo-caption">The giant Kauçuk</div>
+        </div>
+        <div class="vintage-photo">
+            <img src="https://placehold.co/400x500/d0c7b8/5a4d41?text=Grandma+House+3" alt="Vintage apartment plant photo 3">
+            <div class="photo-caption">Benjamin in the salon</div>
+        </div>
+      </figure>
+
+      <p>
+        I was curious when the story and travelogues of these tropical plants to Turkish homes began, so I set out on a journey of discoveries. So here's that story.
+      </p>
+
+      <p>
+        First it started with the European tropical plant craze called <em>pteridomania</em> where greenhouses in Europe cultivated these plants they discovered in their colonialist era. Then this coincided with the Ottoman westernization period, so all of these plants were imported to Anatolian pasha's mansions—like the <span class="tr-term">yalıs</span> near the Bosphorus—and the <span class="tr-term">kış bahçeleri</span> and palaces from the New World as well. 
+      </p>
+
+      <p>
+        This initial introduction was apparently highly restricted to the ultra-wealthy. Then, when the early Turkish Republic was forming, modernized Turkish homes were built as mini-replicas of ultra-wealthy mansions, which led to massive demands and blanket additions of these tropical plants by multiple state-funded domestic nurseries. 
+      </p>
+
+      <h2>The Botanical Pipeline</h2>
+      <p>
+        Here's an interactive map tracing the travel of these plants across the world, passing through the historic European and Levantine botanical giants, and finally settling down into Anatolian eco-brutalist apartments.
+      </p>
+
+      <figure class="l-body-outset">
+        <div id="botanical-map"></div>
+        <figcaption>
+          Figure: The global journey of the Devetabanı and Kauçuk. <br>
+          <em>(Click on the dots to explore the historical nurseries, origins, and state farms. Hover over paths for timelines.)</em>
+        </figcaption>
+      </figure>
+
+      <h2>Why These Three Specifically Win?</h2>
+      <p>
+        As private commercial nurseries expanded in the 1950s and 60s in areas like Yalova and İzmir, growers realized that <strong>Devetabanı</strong>, <strong>Kauçuk</strong>, and <strong>Benjamin</strong> were the most profitable products.
+      </p>
+      <p>
+        Because they could easily be cloned via simple stem cuttings without high-tech lab equipment, domestic nurseries could mass-produce them incredibly cheaply. Local plant sellers (<em>fidanlık</em>) pushed them heavily onto the market just as millions of Turkish citizens were moving into new concrete apartment buildings, solidifying their status as the immortal kings of the Turkish <em>salon</em>.
+      </p>
+
+      <h2 style="margin-top: 4rem;">The Botanical Timeline</h2>
+      
+      <div class="timeline">
+        <div class="timeline-event">
+            <div class="timeline-date">18th - 19th Century</div>
+            <div class="timeline-content"><strong>Pteridomania & The Botanical Giants</strong> <br> European commercial nurseries (James Veitch, Conrad Loddiges, Louis van Houtte, Vilmorin-Andrieux) and East India Companies begin the global extraction of tropicals, building the world's largest hot houses and sending plant hunters on private expeditions to supply European royalty.</div>
+        </div>
+        <div class="timeline-event">
+            <div class="timeline-date">1870s</div>
+            <div class="timeline-content"><strong>From Cretan Soap to Istanbul Flowers</strong> <br> The patriarch, İstavro Sabuncakis, a famous soap manufacturer in Crete who distilled wildflower essences, sends his 13-year-old son Istirati to Istanbul with 500 gold coins due to political unrest.</div>
+        </div>
+        <div class="timeline-event">
+            <div class="timeline-date">1874</div>
+            <div class="timeline-content"><strong>Sabuncakis Founded in Pera</strong> <br> Istirati opens his florist shop inside the Aynalı Pasaj. He imports French glasshouses, brings gardeners from Chios to cultivate tropicals, and becomes the official floral decorator for Ottoman Imperial Palaces like Dolmabahçe and Yıldız.</div>
+        </div>
+        <div class="timeline-event">
+            <div class="timeline-date">1928</div>
+            <div class="timeline-content"><strong>Büyükdere Atatürk Fidanlığı</strong> <br> By direct order of Mustafa Kemal Atatürk, Turkey’s first official state nursery is established. Importing Italian horticulturist Leopold Bologna, it lays the groundwork for modern ornamental plant operations.</div>
+        </div>
+        <div class="timeline-event">
+            <div class="timeline-date">1929</div>
+            <div class="timeline-content"><strong>Millet & Baltacı State Farms</strong> <br> Atatürk purchases farms in Yalova to mass-propagate ornamental greenhouse plants, shifting them from an elite luxury to an accessible commodity.</div>
+        </div>
+        <div class="timeline-event">
+            <div class="timeline-date">1930s</div>
+            <div class="timeline-content"><strong>The Ankara Connection</strong> <br> Impressed by their work, Atatürk invites Sabuncakis to open a branch in the new capital to landscape major infrastructure projects like the Çubuk Dam and Hippodrome. They later manufacture the wreaths for Atatürk's state funeral.</div>
+        </div>
+        <div class="timeline-event">
+            <div class="timeline-date">1950s - 1970s</div>
+            <div class="timeline-content"><strong>The Apartment Invasion</strong> <br> Private and domestic state sellers push easily cloned plants—<em>devetabanı</em>, <em>kauçuk</em>, and <em>benjamin</em>—heavily onto the market. Since they can be easily cloned via simple stem cuttings, domestic nurseries mass-produce them cheaply for citizens moving into new concrete apartments.</div>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const map = L.map('botanical-map', {
+            center: [42.0, 15.0],
+            zoom: 3,
+            scrollWheelZoom: false
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors, &copy; CARTO'
+        }).addTo(map);
+
+        const markerOptions = {
+            radius: 10,
+            fillColor: "#006d77",
+            color: "#ffffff",
+            weight: 3,
+            opacity: 1,
+            fillOpacity: 1
+        };
+
+        const locations = [
+            {
+                name: "Origin: The Americas (Monstera)",
+                coords: [17.0, -90.0],
+                desc: "The native habitat of <em>Monstera deliciosa</em> (Devetabanı). Extracted from the deep tropical rainforests of southern Mexico and Panama by European plant hunters.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Monstera_deliciosa.png?width=400"
+            },
+            {
+                name: "Origin: South Asia (Ficus)",
+                coords: [20.0, 85.0],
+                desc: "The native habitat of <em>Ficus elastica</em> (Kauçuk) and <em>Ficus benjamina</em> (Benjamin).",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Rubber_Plant_(Ficus_elastica_'Robusta')_1.jpg?width=400"
+            },
+            {
+                name: "The East India Companies",
+                coords: [22.5726, 88.3639],
+                desc: "Corporate empires controlled the shipping lanes and botanical gardens (like Calcutta and Bogor) that acted as primary trade pipelines smuggling exotic plants out of Asia, the Americas, and Africa.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/East_India_House_THS_1817_edited.jpg?width=400",
+                sourceLink: "https://www.youtube.com/watch?v=aNjlcpIyVHU",
+                sourceText: "Mini-Doc on EIC Smuggling Pipelines"
+            },
+            {
+                name: "James Veitch & Sons (UK)",
+                coords: [51.4880, -0.1650],
+                desc: "Based in Exeter and Chelsea, they were the most influential commercial plant nursery in the world. They hired elite plant hunters who pioneered private expeditions to introduce over 1,200 exotic species.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Veitch_Nepenthes_house.jpg?width=400",
+                sourceLink: "https://www.victorianbotany.info/home/organisations/veitch-nurseries",
+                sourceText: "Victorian Botany: Veitch Nurseries"
+            },
+            {
+                name: "Conrad Loddiges & Sons (UK)",
+                coords: [51.5450, -0.0553],
+                desc: "Operating out of Hackney, London, this mega-nursery built the world's largest hot houses during the early-to-mid 1800s. They were famous for introducing thousands of tropical palms and orchids into European cultivation.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Ornithogalum_longibracteatum_-_Loddiges.jpg?width=400",
+                sourceLink: "https://en.wikipedia.org/wiki/Loddiges_family",
+                sourceText: "Wikipedia: Loddiges family"
+            },
+            {
+                name: "Vilmorin-Andrieux & Cie (France)",
+                coords: [48.8566, 2.3522],
+                desc: "Based in Paris, this historic firm was the supreme leader in the European seed and botanical trade, cataloging and distributing flora on a massive industrial scale.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Carotte_demi-longue_interm%C3%A9diaire_de_James_Vilmorin-Andrieux_1904.png?width=400",
+                sourceLink: "https://scarc.library.oregonstate.edu/omeka/exhibits/show/seed/earliest/earliest-european",
+                sourceText: "History of Vilmorin (OSU Library)"
+            },
+            {
+                name: "Louis van Houtte Nursery (Belgium)",
+                coords: [51.0500, 3.7303],
+                desc: "Continental Europe's powerhouse for tropical imports. Van Houtte sent his own collectors to South America and successfully cultivated massive stocks that supplied royal estates across Europe, including the Ottoman court.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Louis_van_Houtte.jpg?width=400",
+                sourceLink: "https://www.plantexplorers.com/articles/louis-vanhoutte.htm",
+                sourceText: "Plant Explorers: Louis van Houtte"
+            },
+            {
+                name: "Sabuncakis Roots (Crete)",
+                coords: [35.3387, 25.1442],
+                desc: "The patriarch, İstavro Sabuncakis, was a famous soap manufacturer in Crete who distilled wildflower essences. Due to geopolitical unrest in the 1870s, he sent his 13-year-old son to Istanbul with 500 gold coins.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Heraklion,_Crete_IMG_5868_-_panoramio.jpg?width=400",
+                sourceLink: "https://sabuncakis.net/index.php?route=information/information&information_id=4",
+                sourceText: "Sabuncakis: Cretan Soap History"
+            },
+            {
+                name: "Sabuncakis Florist (Istanbul)",
+                coords: [41.0369, 28.9775],
+                desc: "In 1874, Istirati Sabuncakis opened his shop in Pera. He imported French glasshouses, brought professional gardeners from Chios, and became the official floral decorator for the Ottoman Imperial Palaces.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/1901_image_of_the_Grande_Rue_de_Pera.jpg?width=400",
+                sourceLink: "https://sabuncakiscicekcilik.com/sayfa/6-hakkimizda.aspx",
+                sourceText: "Sabuncakis: Pera History"
+            },
+            {
+                name: "Büyükdere Atatürk Fidanlığı",
+                coords: [41.1667, 29.0500],
+                desc: "Founded in 1928 by direct order of Mustafa Kemal Atatürk. Importing Italian horticulturist Leopold Bologna, the gardeners trained here laid the groundwork for modern ornamental plant operations in Turkey.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Ataturk_in_1923.jpg?width=400",
+                sourceLink: "https://yapidergisi.com/ataturkun-mirasi-tarihi-buyukdere-ataturk-fidanligi-acildi/",
+                sourceText: "Yapı Dergisi: Büyükdere Fidanlığı"
+            },
+            {
+                name: "Yalova State Farms",
+                coords: [40.6549, 29.2842],
+                desc: "These state-run agricultural stations began mass-propagating ornamental greenhouse plants. Domestic nurseries pushed them heavily onto the market just as citizens were moving into new concrete apartments.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Atat%C3%BCrk_Y%C3%BCr%C3%BCyen_K%C3%B6%C5%9Fk,_Yalova,_T%C3%BCrkiye.jpg?width=400",
+                sourceLink: "https://www.cumhuriyet.com.tr/yazarlar/sinan-meydan/ataturk-un-mirasi-buyukdere-fidanligi-2406737",
+                sourceText: "Cumhuriyet: Atatürk'ün Mirası"
+            },
+            {
+                name: "Ankara Sabuncakis",
+                coords: [39.9334, 32.8597],
+                desc: "Impressed by their work, Atatürk personally invited the Sabuncakis family to open a branch in the new capital to landscape major infrastructure projects like the Çubuk Dam.",
+                image: "https://en.wikipedia.org/wiki/Special:FilePath/Ankara_Palas_Frontal.jpg?width=400",
+                sourceLink: "https://repository.bilkent.edu.tr/items/63741237-266a-44e2-8e75-9eb3a634cab6",
+                sourceText: "Bilkent Repository: Flora History"
+            }
+        ];
+
+        const routes = [
+            // 1. Extraction from Origins
+            { start: [17.0, -90.0], end: [51.5450, -0.0553], step: "1", curve: 0.2 }, // Americas to UK
+            { start: [20.0, 85.0], end: [22.5726, 88.3639], step: "1", curve: -0.2 }, // Asia to EIC
+            
+            // 2. Global Trade Pipeline
+            { start: [22.5726, 88.3639], end: [51.4880, -0.1650], step: "2", curve: 0.15 }, // EIC to UK
+            
+            // 3. Continental Distribution
+            { start: [51.5450, -0.0553], end: [51.0500, 3.7303], step: "3", curve: -0.2 }, // UK to Belgium
+            { start: [51.4880, -0.1650], end: [48.8566, 2.3522], step: "3", curve: 0.2 }, // UK to France
+            
+            // 4. The Local Bridge
+            { start: [35.3387, 25.1442], end: [41.0369, 28.9775], step: "4", curve: -0.15 }, // Crete to Pera
+            
+            // 5. Elite Consumption
+            { start: [51.0500, 3.7303], end: [41.0369, 28.9775], step: "5", curve: -0.1 }, // Belgium to Istanbul
+            { start: [48.8566, 2.3522], end: [41.0369, 28.9775], step: "5", curve: 0.15 }, // France to Istanbul
+            
+            // 6. Republic Modernization (Trickle-down)
+            { start: [41.0369, 28.9775], end: [41.1667, 29.0500], step: "6", curve: -0.4 }, // Pera to Büyükdere
+            { start: [41.1667, 29.0500], end: [40.6549, 29.2842], step: "6", curve: 0.4 }, // Büyükdere to Yalova
+            
+            // 7. National Expansion
+            { start: [41.0369, 28.9775], end: [39.9334, 32.8597], step: "7", curve: 0.2 } // Istanbul to Ankara
+        ];
+
+        locations.forEach(loc => {
+            const popupContent = `
+                <div style="min-width: 220px;">
+                    ${loc.image ? `<img src="${loc.image}" class="map-popup-img" alt="${loc.name}">` : ''}
+                    <h3 style="margin: 0 0 8px 0; font-size: 1.1rem; font-family: 'Playfair Display', serif; color: #006d77;">${loc.name}</h3>
+                    <p style="margin: 0 0 12px 0; font-size: 0.9rem; color: #333;">${loc.desc}</p>
+                    ${loc.sourceLink ? `<a href="${loc.sourceLink}" target="_blank" style="color: #d97706; text-decoration: none; font-weight: bold; font-size: 0.85rem;">→ ${loc.sourceText}</a>` : ''}
+                </div>
+            `;
+            L.circleMarker(loc.coords, markerOptions)
+                .addTo(map)
+                .bindPopup(popupContent);
+        });
+
+        // Added curveMult parameter to dynamically adjust overlapping lines
+        function drawDirectedCurve(start, end, labelStep, curveMult) {
+            const lat1 = start[0], lng1 = start[1];
+            const lat2 = end[0], lng2 = end[1];
+
+            const dx = lat2 - lat1;
+            const dy = lng2 - lng1;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            
+            // Apply custom curve offset
+            const curveOffset = dist * (curveMult || 0.2); 
+            const midLat = (lat1 + lat2) / 2;
+            const midLng = (lng1 + lng2) / 2;
+            const perpLat = -dy * (curveOffset / dist);
+            const perpLng = dx * (curveOffset / dist);
+            const ctrlLat = midLat + perpLat;
+            const ctrlLng = midLng + perpLng;
+
+            // Compute quadratic bezier points
+            const points = [];
+            for (let t = 0; t <= 1; t += 0.05) {
+                const u = 1 - t;
+                const pLat = u*u*lat1 + 2*u*t*ctrlLat + t*t*lat2;
+                const pLng = u*u*lng1 + 2*u*t*ctrlLng + t*t*lng2;
+                points.push([pLat, pLng]);
+            }
+
+            // Draw solid line
+            const path = L.polyline(points, {
+                color: '#006d77',
+                weight: 2,
+                opacity: 0.6,
+                smoothFactor: 1
+            }).addTo(map);
+
+            // Compute exact midpoint for the label and arrow
+            const tMid = 0.5, uMid = 0.5;
+            const midPointLat = uMid*uMid*lat1 + 2*uMid*tMid*ctrlLat + tMid*tMid*lat2;
+            const midPointLng = uMid*uMid*lng1 + 2*uMid*tMid*ctrlLng + tMid*tMid*lng2;
+
+            // Compute tangent for arrow rotation (Accounting for screen Y-axis flip)
+            const tangLat = 2*uMid*(ctrlLat - lat1) + 2*tMid*(lat2 - ctrlLat);
+            const tangLng = 2*uMid*(ctrlLng - lng1) + 2*tMid*(lng2 - ctrlLng);
+            const angle = Math.atan2(-tangLat, tangLng) * (180 / Math.PI);
+
+            const iconHtml = `
+                <div style="position: relative;">
+                    <div style="transform: rotate(${angle}deg); color: #006d77; font-size: 16px; position:absolute; top:-10px; left:-6px; text-shadow: 0 0 3px white;">➤</div>
+                    <div class="path-label-box" style="position: absolute; top: 10px; left: -10px;">
+                        ${labelStep}
+                    </div>
+                </div>
+            `;
+
+            const marker = L.marker([midPointLat, midPointLng], {
+                icon: L.divIcon({ className: 'custom-route-icon', html: iconHtml, iconSize: [0, 0] })
+            }).addTo(map);
+        }
+
+        routes.forEach(r => drawDirectedCurve(r.start, r.end, r.step, r.curve));
+    });
+  </script>
+
+</body>
+</html>
