@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anatolian Thinkers</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS for the interactive map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Load Tailwind CSS for the embedded map styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* --- Base Layout & Typography (from devetabani.html) --- */
+    body {
+      background-image: url("../images/textured-mulberry-paper.jpg"); 
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+      margin: 0;
+      padding: 40px 0;
+      background-color: #f4ece6; /* Fallback */
+      font-family: 'Inter', sans-serif;
+    }
+
+    .paper-container {
+      border: 2px solid #006d77;
+      border-radius: 8px;
+      padding: 50px 60px;
+      margin: 0 auto;
+      max-width: 1200px; /* Slightly wider to accommodate the map UI optimally */
+      background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- The Distill Grid System --- */
+    .article-grid {
+      display: grid;
+      grid-template-columns: 1fr minmax(auto, 880px) 30px 280px 1fr;
+    }
+
+    .article-grid > * {
+      grid-column: 2;
+    }
+
+    /* Outset: Spans Main Content + Sidenote area */
+    .article-grid > figure.l-body-outset {
+      grid-column: 2 / 5; 
+      width: 100%;
+      margin: 0 0 2rem 0;
+    }
+
+    h1.article-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3rem;
+      color: #052d3f;
+      line-height: 1.1;
+      margin-bottom: 2.5rem;
+    }
+
+    a.nav-back {
+        text-decoration: none;
+        color: #666;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        display: inline-block;
+        transition: color 0.2s;
+    }
+    a.nav-back:hover { color: #006d77; }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .paper-container { padding: 30px; margin: 10px; }
+      .article-grid { display: block; }
+      .article-grid > figure.l-body-outset { width: 100%; margin: 1.5rem 0; }
+    }
+
+    /* --- Original Map Aesthetics (from anatolian_intellectual_history_map.html) --- */
+    #map { height: 100%; width: 100%; z-index: 10; background-color: #f8fafc; }
+    
+    .custom-marker {
+        border: 2px solid white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+        opacity: 0;
+    }
+
+    .shape-circle {
+        border-radius: 50%;
+        animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .shape-circle:hover { transform: scale(1.3); z-index: 1000 !important; }
+
+    .shape-square {
+        border-radius: 3px;
+        animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .shape-square:hover { transform: scale(1.3); z-index: 1000 !important; }
+
+    .shape-diamond {
+        border-radius: 3px;
+        animation: popInDiamond 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .shape-diamond:hover { transform: rotate(45deg) scale(1.3); z-index: 1000 !important; }
+
+    @keyframes popIn {
+        0% { transform: scale(0); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes popInDiamond {
+        0% { transform: rotate(45deg) scale(0); opacity: 0; }
+        100% { transform: rotate(45deg) scale(1); opacity: 1; }
+    }
+
+    /* Leaflet popup overrides */
+    .leaflet-popup-content-wrapper {
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        padding: 0;
+    }
+    .leaflet-popup-content { margin: 0; line-height: 1.5; }
+    .leaflet-popup-tip-container { margin-top: -1px; }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body>
+
+  <article class="paper-container">
+    
+    <a href="../index.html" class="nav-back">← Back to Home</a>
+
+    <div class="article-grid">
+      
+      <header style="grid-column: 2 / 5;">
+        <h1 class="article-title">Anatolian Thinkers</h1>
+      </header>
+
+      <figure class="l-body-outset" style="height: 750px; border-radius: 0.75rem; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        
+        <!-- Map Container (Exactly preserved from the original file) -->
+        <div class="bg-slate-50 h-full w-full flex flex-col md:flex-row text-slate-800 relative">
+            
+            <!-- Left Sidebar: Info Panel & List -->
+            <div class="w-full md:w-1/3 lg:w-1/4 h-1/2 md:h-full bg-white shadow-[4px_0_15px_rgba(0,0,0,0.05)] z-20 flex flex-col transition-all duration-300 relative border-r border-slate-200">
+                
+                <!-- Header -->
+                <div class="p-5 lg:p-6 border-b border-slate-100 bg-white z-10 shrink-0">
+                    <h1 class="text-xl lg:text-2xl font-bold text-slate-900 leading-tight mb-2">Anatolian Thinkers</h1>
+                    <p class="text-xs lg:text-sm text-slate-500">Mapping 3,000 years of intellectual exchange, migration, and linguistic shifts.</p>
+                </div>
+
+                <!-- Dynamic Era Content -->
+                <div class="flex-1 overflow-y-auto p-5 lg:p-6 bg-slate-50/50">
+                    <div id="era-title" class="text-sm font-bold text-indigo-600 uppercase tracking-wider mb-4 sticky top-0 bg-slate-50/90 backdrop-blur-sm py-2 z-10">Select an Era</div>
+                    <div id="thinkers-list" class="space-y-4">
+                        <!-- Thinker cards injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Double Legend -->
+                <div class="p-4 border-t border-slate-100 bg-white flex flex-col gap-4 shrink-0 overflow-y-auto max-h-[30vh]">
+                    <!-- Status Legend -->
+                    <div>
+                        <h3 class="text-[10px] lg:text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Migration Status</h3>
+                        <div class="flex flex-col gap-2 text-xs">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 bg-slate-400 rounded-full shrink-0"></div>
+                                <span class="text-slate-600">Native (Born & Active in Anatolia)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 bg-slate-400 rounded-sm shrink-0"></div>
+                                <span class="text-slate-600">Emigrant (Born here, active elsewhere)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 bg-slate-400 rounded-sm rotate-45 shrink-0 transform scale-75"></div>
+                                <span class="text-slate-600">Immigrant (Born elsewhere, active here)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Language Legend -->
+                    <div>
+                        <h3 class="text-[10px] lg:text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Language Dominance</h3>
+                        <div id="legend-container" class="flex flex-wrap gap-1.5 text-xs">
+                            <!-- Language items injected via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Map & Timeline Controls -->
+            <div class="flex-1 h-1/2 md:h-full relative flex flex-col">
+                
+                <div class="flex-1 relative">
+                    <div id="map"></div>
+                </div>
+
+                <!-- Timeline Overlay Controls -->
+                <div class="absolute bottom-6 left-0 right-0 px-4 md:px-12 z-[400] pointer-events-none">
+                    <div class="bg-white/95 backdrop-blur-md border border-slate-200 p-4 md:p-5 rounded-2xl shadow-2xl pointer-events-auto max-w-4xl mx-auto flex flex-col gap-3">
+                        <div class="flex items-center justify-between gap-4">
+                            <button id="play-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-full shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shrink-0" aria-label="Play timeline">
+                                <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                    <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            
+                            <div class="flex-1">
+                                <div class="flex justify-between text-[10px] lg:text-xs font-semibold text-slate-500 mb-1.5">
+                                    <span>1500 BC</span>
+                                    <span id="current-era-display" class="text-indigo-600 font-bold text-center">Bronze Age</span>
+                                    <span>1400 AD</span>
+                                </div>
+                                <input type="range" id="timeline-slider" min="0" max="4" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+      </figure>
+
+    </div>
+  </article>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <script>
+      // --- Data Definitions ---
+      const eras = [
+          { id: 0, name: "Bronze & Iron Age", span: "(1500–600 BC)", desc: "Ancient kingdoms producing practical texts on diplomacy, engineering, and economics." },
+          { id: 1, name: "Classical Antiquity", span: "(600–100 BC)", desc: "The rise of Ionian natural philosophy and Hellenistic thought, mostly on the Aegean coast." },
+          { id: 2, name: "Roman & Late Antiquity", span: "(100–600 AD)", desc: "Stoicism, medicine, and the founding of Eastern Christian mysticism in Central Anatolia." },
+          { id: 3, name: "Byzantine Dark Ages", span: "(600–1000 AD)", desc: "Greek centers decline due to wars; Arabic science and Armenian histories flourish." },
+          { id: 4, name: "Seljuk Transition", span: "(1000–1400 AD)", desc: "Turkic arrivals synthesize Persian, Arabic, and native Turkish thought in the interior." }
+      ];
+
+      const languageColors = {
+          "Hittite": "#8b5cf6", "Urartian": "#d946ef", "Lydian": "#ec4899", "Lycian": "#f43f5e", 
+          "Greek": "#3b82f6", "Armenian": "#f59e0b", "Arabic": "#10b981", "Syriac": "#14b8a6", 
+          "Persian": "#ef4444", "Turkish": "#0ea5e9"
+      };
+
+      const statusConfig = {
+          native: {
+              text: "Native (Born & Active here)", shape: "shape-circle",
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5"><path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd" /></svg>`
+          },
+          emigrant: {
+              text: "Emigrant (Active elsewhere)", shape: "shape-square",
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5"><path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd" /></svg>`
+          },
+          immigrant: {
+              text: "Immigrant (Born elsewhere)", shape: "shape-diamond",
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5"><path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M19 10a.75.75 0 00-.75-.75H8.704l1.048-.943a.75.75 0 10-1.004-1.114l-2.5 2.25a.75.75 0 000 1.114l2.5 2.25a.75.75 0 101.004-1.114l-1.048-.943h9.546A.75.75 0 0019 10z" clip-rule="evenodd" /></svg>`
+          }
+      };
+
+      const thinkers = [
+          // Bronze & Iron Age
+          { name: "Kikkuli", era: 0, city: "Hattusa", lat: 40.01, lon: 34.61, lang: "Hittite", status: "immigrant", desc: "Hurrian master horse trainer who authored the oldest scientific manual on animal conditioning.", wiki: "https://en.wikipedia.org/wiki/Kikkuli", work: "The Kikkuli Text", workLink: "https://en.wikipedia.org/wiki/Kikkuli_text" },
+          { name: "Queen Puduhepa", era: 0, city: "Hattusa", lat: 40.03, lon: 34.64, lang: "Hittite", status: "native", desc: "Priestess and diplomat who co-authored the Treaty of Kadesh, the earliest surviving peace treaty.", wiki: "https://en.wikipedia.org/wiki/Puduhepa", work: "Treaty of Kadesh", workLink: "https://avalon.law.yale.edu/ancient/kadesh.asp" },
+          { name: "King Hattusili III", era: 0, city: "Hattusa", lat: 39.98, lon: 34.58, lang: "Hittite", status: "native", desc: "Authored an early masterpiece of political autobiography to justify his reign.", wiki: "https://en.wikipedia.org/wiki/Hattusili_III", work: "Apology of Hattusili", workLink: "https://www.worldhistory.org/Hattusili_III/" },
+          { name: "Menua", era: 0, city: "Tushpa (Van)", lat: 38.50, lon: 43.33, lang: "Urartian", status: "native", desc: "Urartian king and master hydrological engineer who documented massive water systems.", wiki: "https://en.wikipedia.org/wiki/Menua", work: "Urartian Inscriptions", workLink: "https://en.wikipedia.org/wiki/Urartian_language" },
+          { name: "Argishti I", era: 0, city: "Tushpa (Van)", lat: 38.53, lon: 43.36, lang: "Urartian", status: "native", desc: "Expanded Urartian water networks and kept extensive cuneiform annals.", wiki: "https://en.wikipedia.org/wiki/Argishti_I_of_Urartu", work: "Erebuni Annals", workLink: "https://en.wikipedia.org/wiki/Erebuni_Fortress" },
+          { name: "Xanthus of Lydia", era: 0, city: "Sardis (Manisa)", lat: 38.48, lon: 28.04, lang: "Lydian", status: "native", desc: "Early historian who documented Lydian culture, influencing Greek historiography.", wiki: "https://en.wikipedia.org/wiki/Xanthus_(historian)", work: "Lydiaca (Fragments)", workLink: "https://en.wikipedia.org/wiki/Lydiaca" },
+          { name: "Lydian Minters", era: 0, city: "Sardis (Manisa)", lat: 38.46, lon: 28.01, lang: "Lydian", status: "native", desc: "Anonymous innovators who invented and standardized the world's first coinage.", wiki: "https://en.wikipedia.org/wiki/Lydian_coinage", work: "The First Electrum Coins", workLink: "https://en.wikipedia.org/wiki/Electrum" },
+          
+          // Classical Antiquity
+          { name: "Thales of Miletus", era: 1, city: "Miletus", lat: 37.53, lon: 27.27, lang: "Greek", status: "native", desc: "The 'first philosopher' who sought natural explanations for the cosmos.", wiki: "https://en.wikipedia.org/wiki/Thales_of_Miletus", work: "Metaphysics (Aristotle ref)", workLink: "http://classics.mit.edu/Aristotle/metaphysics.1.i.html" },
+          { name: "Anaximander", era: 1, city: "Miletus", lat: 37.51, lon: 27.30, lang: "Greek", status: "native", desc: "Pioneer in geometry, astronomy, and spatial cosmology.", wiki: "https://en.wikipedia.org/wiki/Anaximander", work: "Apeiron Theory", workLink: "https://en.wikipedia.org/wiki/Apeiron_(cosmology)" },
+          { name: "Anaximenes", era: 1, city: "Miletus", lat: 37.56, lon: 27.24, lang: "Greek", status: "native", desc: "Colleague of Anaximander; proposed air as the foundational element of all matter.", wiki: "https://en.wikipedia.org/wiki/Anaximenes_of_Miletus", work: "Air (Aer) Theory", workLink: "https://en.wikipedia.org/wiki/Aer_(philosophy)" },
+          { name: "Heraclitus", era: 1, city: "Ephesus", lat: 37.94, lon: 27.34, lang: "Greek", status: "native", desc: "Philosopher of constant flux: 'You cannot step in the same river twice.'", wiki: "https://en.wikipedia.org/wiki/Heraclitus", work: "Fragments", workLink: "https://en.wikisource.org/wiki/Fragments_of_Heraclitus" },
+          { name: "Diogenes of Sinope", era: 1, city: "Sinope", lat: 42.02, lon: 35.15, lang: "Greek", status: "emigrant", desc: "Left for Greece; founded Cynicism, famously living in a ceramic jar.", wiki: "https://en.wikipedia.org/wiki/Diogenes_of_Sinope", work: "Lives of Eminent Philosophers", workLink: "https://en.wikisource.org/wiki/Lives_of_the_Eminent_Philosophers/Book_VI" },
+          { name: "Cleanthes", era: 1, city: "Assos", lat: 39.49, lon: 26.33, lang: "Greek", status: "emigrant", desc: "Former boxer from Anatolia who became the second head of the Stoic school in Athens.", wiki: "https://en.wikipedia.org/wiki/Cleanthes", work: "Hymn to Zeus", workLink: "https://en.wikipedia.org/wiki/Hymn_to_Zeus" },
+          { name: "Chrysippus", era: 1, city: "Soli (Mersin)", lat: 36.74, lon: 34.54, lang: "Greek", status: "emigrant", desc: "Considered the second founder of Stoicism, formalizing its complex logic system.", wiki: "https://en.wikipedia.org/wiki/Chrysippus", work: "Stoic Logic", workLink: "https://plato.stanford.edu/entries/chrysippus/" },
+          { name: "Zeno of Tarsus", era: 1, city: "Tarsus", lat: 36.91, lon: 34.89, lang: "Greek", status: "emigrant", desc: "Disciple of Chrysippus who left Tarsus to become the fourth head of the Stoic school.", wiki: "https://en.wikipedia.org/wiki/Zeno_of_Tarsus", work: "Stoic Successions", workLink: "https://en.wikipedia.org/wiki/Stoicism" },
+          { name: "Strabo", era: 1, city: "Amaseia", lat: 40.65, lon: 35.83, lang: "Greek", status: "emigrant", desc: "Traveled widely to Rome/Egypt; meticulously mapped the known world.", wiki: "https://en.wikipedia.org/wiki/Strabo", work: "Geographica", workLink: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Strabo/home.html" },
+          { name: "Lycian League", era: 1, city: "Xanthos", lat: 36.35, lon: 29.31, lang: "Lycian", status: "native", desc: "Architects of the first proportional representative democracy.", wiki: "https://en.wikipedia.org/wiki/Lycian_League", work: "The Letoon Trilingual", workLink: "https://en.wikipedia.org/wiki/Letoon_trilingual" },
+          { name: "Metrodorus", era: 1, city: "Lampsacus (Lapseki)", lat: 40.34, lon: 26.68, lang: "Greek", status: "emigrant", desc: "Epicurus's closest friend and intended successor, a pillar of early Epicureanism.", wiki: "https://en.wikipedia.org/wiki/Metrodorus_of_Lampsacus_(the_younger)", work: "Fragments", workLink: "https://en.wikipedia.org/wiki/Metrodorus_of_Lampsacus_(the_younger)" },
+          { name: "Arcesilaus", era: 1, city: "Pitane (Çandarlı)", lat: 38.93, lon: 26.93, lang: "Greek", status: "emigrant", desc: "Head of the Platonic Academy; initiated its Middle phase by shifting it toward Skepticism.", wiki: "https://en.wikipedia.org/wiki/Arcesilaus", work: "Academic Skepticism", workLink: "https://plato.stanford.edu/entries/arcesilaus/" },
+          
+          // Roman & Late Antiquity
+          { name: "Galen of Pergamon", era: 2, city: "Pergamon", lat: 39.12, lon: 27.18, lang: "Greek", status: "emigrant", desc: "The greatest physician of antiquity; his treatises dominated Western and Islamic medicine for 1,500 years.", wiki: "https://en.wikipedia.org/wiki/Galen", work: "On the Natural Faculties", workLink: "https://www.gutenberg.org/ebooks/24531" },
+          { name: "Epictetus", era: 2, city: "Hierapolis", lat: 37.92, lon: 29.12, lang: "Greek", status: "emigrant", desc: "A former slave who left for Rome and became a pillar of Stoicism.", wiki: "https://en.wikipedia.org/wiki/Epictetus", work: "The Enchiridion", workLink: "http://classics.mit.edu/Epictetus/epicench.html" },
+          { name: "Alexander of Aphrodisias", era: 2, city: "Aphrodisias", lat: 37.70, lon: 28.72, lang: "Greek", status: "emigrant", desc: "Moved to Athens; definitive ancient commentator on Aristotle.", wiki: "https://en.wikipedia.org/wiki/Alexander_of_Aphrodisias", work: "Commentary on Aristotle", workLink: "https://plato.stanford.edu/entries/alexander-aphrodisias/" },
+          { name: "Athenodorus Cananites", era: 2, city: "Tarsus", lat: 36.93, lon: 34.91, lang: "Greek", status: "emigrant", desc: "Stoic philosopher and tutor who traveled to Rome to become the primary advisor to Emperor Augustus.", wiki: "https://en.wikipedia.org/wiki/Athenodorus_Cananites", work: "Advising Augustus", workLink: "https://en.wikipedia.org/wiki/Athenodorus_Cananites" },
+          { name: "Basil of Caesarea", era: 2, city: "Caesarea", lat: 38.72, lon: 35.48, lang: "Greek", status: "native", desc: "A Cappadocian Father shaping early monastic Christianity.", wiki: "https://en.wikipedia.org/wiki/Basil_of_Caesarea", work: "Hexaemeron", workLink: "https://www.newadvent.org/fathers/3201.htm" },
+          { name: "Gregory of Nyssa", era: 2, city: "Nyssa", lat: 38.74, lon: 35.51, lang: "Greek", status: "native", desc: "A Cappadocian Father; deep mystical philosopher.", wiki: "https://en.wikipedia.org/wiki/Gregory_of_Nyssa", work: "Against Eunomius", workLink: "https://www.newadvent.org/fathers/2901.htm" },
+          { name: "Gregory of Nazianzus", era: 2, city: "Nazianzus", lat: 38.35, lon: 34.37, lang: "Greek", status: "native", desc: "A Cappadocian Father known as 'The Theologian'.", wiki: "https://en.wikipedia.org/wiki/Gregory_of_Nazianzus", work: "Theological Orations", workLink: "https://www.newadvent.org/fathers/3102.htm" },
+          { name: "Mesrop Mashtots", era: 2, city: "Hatsik (Muş)", lat: 38.73, lon: 41.49, lang: "Armenian", status: "native", desc: "Theologian and linguist who invented the Armenian alphabet.", wiki: "https://en.wikipedia.org/wiki/Mesrop_Mashtots", work: "Armenian Alphabet", workLink: "https://en.wikipedia.org/wiki/Armenian_alphabet" },
+          { name: "Diogenes of Oenoanda", era: 2, city: "Oenoanda", lat: 36.81, lon: 29.55, lang: "Greek", status: "native", desc: "Commissioned a massive inscription of Epicurean philosophy on a public wall.", wiki: "https://en.wikipedia.org/wiki/Diogenes_of_Oenoanda", work: "Oenoanda Inscription", workLink: "https://en.wikipedia.org/wiki/Oenoanda" },
+          { name: "Menodotus of Nicomedia", era: 2, city: "Nicomedia (İzmit)", lat: 40.76, lon: 29.92, lang: "Greek", status: "emigrant", desc: "Pyrrhonist Skeptic and physician advocating for observation over dogmatic theory.", wiki: "https://en.wikipedia.org/wiki/Menodotus_of_Nicomedia", work: "Empiricist Medicine", workLink: "https://en.wikipedia.org/wiki/Empiric_school" },
+          { name: "Simplicius", era: 2, city: "Cilicia", lat: 36.80, lon: 34.60, lang: "Greek", status: "emigrant", desc: "One of the last great pagan philosophers; his massive commentaries on Aristotle preserved lost Presocratic thought.", wiki: "https://en.wikipedia.org/wiki/Simplicius_of_Cilicia", work: "Commentaries on Aristotle", workLink: "https://plato.stanford.edu/entries/simplicius/" },
+          { name: "Aedesius", era: 2, city: "Pergamon", lat: 39.14, lon: 27.20, lang: "Greek", status: "native", desc: "Cappadocian-born Neoplatonist who founded a highly influential philosophical school in Pergamon.", wiki: "https://en.wikipedia.org/wiki/Aedesius", work: "Neoplatonic Teachings", workLink: "https://en.wikipedia.org/wiki/Aedesius" },
+          { name: "Chrysanthius", era: 2, city: "Sardis", lat: 38.49, lon: 28.05, lang: "Greek", status: "native", desc: "Neoplatonist philosopher and High Priest of Lydia; served as a tutor to Emperor Julian the Apostate.", wiki: "https://en.wikipedia.org/wiki/Chrysanthius", work: "Philosophical Letters", workLink: "https://en.wikipedia.org/wiki/Chrysanthius" },
+          { name: "Eunapius", era: 2, city: "Sardis", lat: 38.47, lon: 28.03, lang: "Greek", status: "native", desc: "Philosopher and historian whose writings preserved the history of Late Antique Neoplatonism.", wiki: "https://en.wikipedia.org/wiki/Eunapius", work: "Lives of the Philosophers", workLink: "https://en.wikipedia.org/wiki/Lives_of_the_Philosophers_and_Sophists" },
+          { name: "Themistius", era: 2, city: "Paphlagonia", lat: 41.38, lon: 33.78, lang: "Greek", status: "emigrant", desc: "Peripatetic philosopher and statesman in Constantinople who actively advocated for religious tolerance.", wiki: "https://en.wikipedia.org/wiki/Themistius", work: "Paraphrases of Aristotle", workLink: "https://en.wikipedia.org/wiki/Themistius" },
+
+          // Byzantine Dark Ages
+          { name: "Constantine-Silvanus", era: 3, city: "Samosata", lat: 37.58, lon: 38.48, lang: "Armenian", status: "native", desc: "Founded Paulicianism, a dualistic religious philosophy.", wiki: "https://en.wikipedia.org/wiki/Constantine-Silvanus", work: "Paulicianism", workLink: "https://en.wikipedia.org/wiki/Paulicianism" },
+          { name: "Leo III the Isaurian", era: 3, city: "Germanikeia", lat: 37.59, lon: 36.93, lang: "Greek", status: "emigrant", desc: "Emperor and theological architect of Iconoclasm.", wiki: "https://en.wikipedia.org/wiki/Leo_III_the_Isaurian", work: "Ecloga (Law)", workLink: "https://en.wikipedia.org/wiki/Ecloga_(law)" },
+          { name: "Theodore of Sykeon", era: 3, city: "Sykeon (Ankara)", lat: 40.16, lon: 31.92, lang: "Greek", status: "native", desc: "Ascetic leader shaping rural, mystical culture of central Anatolia.", wiki: "https://en.wikipedia.org/wiki/Theodore_of_Sykeon", work: "Life of Theodore", workLink: "https://sourcebooks.fordham.edu/basis/theodore-sykeon.asp" },
+          { name: "Agathias", era: 3, city: "Myrina", lat: 38.83, lon: 27.01, lang: "Greek", status: "emigrant", desc: "Court historian and anthologist preserving ancient poetry.", wiki: "https://en.wikipedia.org/wiki/Agathias", work: "Greek Anthology", workLink: "https://en.wikipedia.org/wiki/Greek_Anthology" },
+          { name: "George of Pisidia", era: 3, city: "Pisidia", lat: 38.01, lon: 30.82, lang: "Greek", status: "emigrant", desc: "The 'Christian Pindar', wrote epic Byzantine-Persian war poetry.", wiki: "https://en.wikipedia.org/wiki/George_of_Pisidia", work: "Persian Campaigns", workLink: "https://en.wikipedia.org/wiki/Heraclian_campaign_of_622" },
+          { name: "Thabit ibn Qurra", era: 3, city: "Harran", lat: 36.86, lon: 39.03, lang: "Arabic", status: "emigrant", desc: "Left for Baghdad; advanced global knowledge in algebra and physics.", wiki: "https://en.wikipedia.org/wiki/Thabit_ibn_Qurra", work: "Measurement Figures", workLink: "https://en.wikipedia.org/wiki/Book_on_the_Measurement_of_Plane_and_Spherical_Figures" },
+          { name: "Al-Battani", era: 3, city: "Harran", lat: 36.88, lon: 39.06, lang: "Arabic", status: "emigrant", desc: "Worked mostly in Raqqa; revolutionized astronomy and trigonometry.", wiki: "https://en.wikipedia.org/wiki/Al-Battani", work: "The Zij", workLink: "https://en.wikipedia.org/wiki/Zij" },
+          { name: "Thomas Artsruni", era: 3, city: "Vaspurakan", lat: 38.55, lon: 43.40, lang: "Armenian", status: "native", desc: "Historian preserving Eastern Anatolia's geopolitical survival.", wiki: "https://en.wikipedia.org/wiki/Thomas_Artsruni", work: "House of Artsrunik", workLink: "https://en.wikipedia.org/wiki/Vaspurakan" },
+          { name: "Arethas of Caesarea", era: 3, city: "Caesarea", lat: 38.70, lon: 35.46, lang: "Greek", status: "native", desc: "Greek archbishop who preserved Plato and Aristotle's works.", wiki: "https://en.wikipedia.org/wiki/Arethas_of_Caesarea", work: "Arethas Codices", workLink: "https://en.wikipedia.org/wiki/Arethas_of_Caesarea" },
+          { name: "Gregory of Narek", era: 3, city: "Narek (Van)", lat: 38.30, lon: 43.05, lang: "Armenian", status: "native", desc: "Monastic mystic; authored the masterpiece 'Book of Lamentations'.", wiki: "https://en.wikipedia.org/wiki/Gregory_of_Narek", work: "Book of Lamentations", workLink: "https://en.wikipedia.org/wiki/Book_of_Lamentations" },
+          { name: "Leo the Deacon", era: 3, city: "Kaloe", lat: 38.20, lon: 27.99, lang: "Greek", status: "native", desc: "Historian chronicling the end of the Byzantine Dark Ages.", wiki: "https://en.wikipedia.org/wiki/Leo_the_Deacon", work: "The History", workLink: "https://en.wikipedia.org/wiki/Leo_the_Deacon" },
+          
+          // Seljuk Transition
+          { name: "John Mauropous", era: 4, city: "Sinop", lat: 41.80, lon: 34.90, lang: "Greek", status: "emigrant", desc: "Humanist scholar bridging theology with ancient pagan philosophy.", wiki: "https://en.wikipedia.org/wiki/John_Mauropous", work: "Poems", workLink: "https://en.wikipedia.org/wiki/John_Mauropous" },
+          { name: "Michael Attaleiates", era: 4, city: "Attalea", lat: 36.89, lon: 30.71, lang: "Greek", status: "emigrant", desc: "Legal scholar documenting the initial arrival of the Seljuk Turks.", wiki: "https://en.wikipedia.org/wiki/Michael_Attaleiates", work: "The History", workLink: "https://en.wikipedia.org/wiki/Michael_Attaleiates" },
+          { name: "Al-Jazari", era: 4, city: "Cizre", lat: 37.32, lon: 42.17, lang: "Arabic", status: "native", desc: "Master inventor and mechanical engineer at the Artuqid court.", wiki: "https://en.wikipedia.org/wiki/Ismail_al-Jazari", work: "Ingenious Devices", workLink: "https://en.wikipedia.org/wiki/The_Book_of_Knowledge_of_Ingenious_Mechanical_Devices" },
+          { name: "Michael the Great", era: 4, city: "Melitene", lat: 38.35, lon: 38.31, lang: "Syriac", status: "native", desc: "Patriarch authoring massive, comprehensive world histories.", wiki: "https://en.wikipedia.org/wiki/Michael_the_Syrian", work: "Chronicle", workLink: "https://en.wikipedia.org/wiki/Michael_the_Syrian" },
+          { name: "Niketas Choniates", era: 4, city: "Chonae", lat: 37.75, lon: 29.35, lang: "Greek", status: "emigrant", desc: "Elite historian writing on the Byzantine Empire's collapse.", wiki: "https://en.wikipedia.org/wiki/Niketas_Choniates", work: "O City of Byzantium", workLink: "https://en.wikipedia.org/wiki/Niketas_Choniates" },
+          { name: "Sadreddin Konevi", era: 4, city: "Konya", lat: 37.89, lon: 32.50, lang: "Arabic", status: "native", desc: "Major Islamic philosopher shaping Seljuk theology.", wiki: "https://en.wikipedia.org/wiki/Sadr_al-Din_al-Qunawi", work: "I'jaz al-Bayan", workLink: "https://en.wikipedia.org/wiki/Sadr_al-Din_al-Qunawi" },
+          { name: "Bar Hebraeus", era: 4, city: "Melitene", lat: 38.37, lon: 38.34, lang: "Syriac", status: "emigrant", desc: "Moved to Persia; brilliant polymath, philosopher, and astronomer.", wiki: "https://en.wikipedia.org/wiki/Bar_Hebraeus", work: "Chronography", workLink: "https://en.wikipedia.org/wiki/Bar_Hebraeus" },
+          { name: "Jalal al-Din Rumi", era: 4, city: "Konya", lat: 37.87, lon: 32.48, lang: "Persian", status: "immigrant", desc: "Fled from Balkh; history's most famous Sufi poet.", wiki: "https://en.wikipedia.org/wiki/Rumi", work: "The Masnavi", workLink: "https://www.gutenberg.org/ebooks/73117" },
+          { name: "Hacı Bektaş Veli", era: 4, city: "Nevşehir", lat: 38.94, lon: 34.56, lang: "Turkic", status: "immigrant", desc: "Teachings became bedrock for Alevi-Bektashi culture.", wiki: "https://en.wikipedia.org/wiki/Haji_Bektash_Veli", work: "Makalat", workLink: "https://en.wikipedia.org/wiki/Haji_Bektash_Veli" },
+          { name: "Yunus Emre", era: 4, city: "Eskişehir", lat: 39.77, lon: 30.52, lang: "Turkish", status: "native", desc: "Pioneer of vernacular poetry in spoken Turkish.", wiki: "https://en.wikipedia.org/wiki/Yunus_Emre", work: "Divan", workLink: "https://en.wikipedia.org/wiki/Yunus_Emre" },
+          { name: "Aşık Paşa", era: 4, city: "Kırşehir", lat: 39.14, lon: 34.16, lang: "Turkish", status: "native", desc: "Elevated Turkish to an intellectual language to protest Persian dominance.", wiki: "https://en.wikipedia.org/wiki/A%C5%9F%C4%B1k_Pasha", work: "Garibname", workLink: "https://en.wikipedia.org/wiki/A%C5%9F%C4%B1k_Pasha" }
+      ];
+
+      // Initialize Map
+      const map = L.map('map', {
+          zoomControl: false 
+      }).setView([39.0, 35.0], window.innerWidth < 768 ? 5.5 : 6.2);
+
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+          subdomains: 'abcd',
+          maxZoom: 20
+      }).addTo(map);
+
+      let currentMarkers = [];
+      let animationInterval;
+      let isPlaying = false;
+
+      const slider = document.getElementById('timeline-slider');
+      const eraDisplay = document.getElementById('current-era-display');
+      const eraTitle = document.getElementById('era-title');
+      const thinkersList = document.getElementById('thinkers-list');
+      const legendContainer = document.getElementById('legend-container');
+      const playBtn = document.getElementById('play-btn');
+      const playIcon = document.getElementById('play-icon');
+
+      // Build Language Legend
+      Object.keys(languageColors).forEach(lang => {
+          const el = document.createElement('div');
+          el.className = 'flex items-center gap-1 px-1.5 py-0.5 bg-slate-50 rounded border border-slate-100';
+          el.innerHTML = `
+              <div class="w-2.5 h-2.5 rounded-full" style="background-color: ${languageColors[lang]}"></div>
+              <span class="text-slate-600 font-medium">${lang}</span>
+          `;
+          legendContainer.appendChild(el);
+      });
+
+      function setEra(eraIndex) {
+          const era = eras[eraIndex];
+          
+          slider.value = eraIndex;
+          eraDisplay.innerText = era.name;
+          eraTitle.innerHTML = `<span class="text-slate-400 font-normal mr-2">${era.span}</span> ${era.name}`;
+          
+          currentMarkers.forEach(m => map.removeLayer(m));
+          currentMarkers = [];
+          thinkersList.innerHTML = '';
+          
+          const activeThinkers = thinkers.filter(t => t.era === parseInt(eraIndex));
+          
+          const descHeader = document.createElement('div');
+          descHeader.className = "text-sm text-slate-600 mb-5 pb-4 border-b border-slate-200";
+          descHeader.innerText = era.desc;
+          thinkersList.appendChild(descHeader);
+
+          activeThinkers.forEach((t, i) => {
+              const primaryLang = Object.keys(languageColors).find(l => t.lang.includes(l)) || "Greek";
+              const markerColor = languageColors[primaryLang];
+              const statusInfo = statusConfig[t.status];
+
+              // Create Map Marker
+              const customIcon = L.divIcon({
+                  className: 'custom-icon',
+                  html: `<div class="custom-marker ${statusInfo.shape}" style="background-color: ${markerColor}; width: 16px; height: 16px; margin: auto;"></div>`,
+                  iconSize: [24, 24],
+                  iconAnchor: [12, 12]
+              });
+
+              const popupContent = `
+                  <div class="p-3 min-w-[220px]">
+                      <div class="text-[10px] font-bold uppercase tracking-wider mb-1 flex items-center gap-2" style="color: ${markerColor}">
+                          ${t.lang}
+                      </div>
+                      <div class="font-bold text-slate-900 text-lg leading-tight mb-1 flex items-center gap-1.5">
+                          ${t.name}
+                          <a href="${t.wiki}" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-indigo-600 transition-colors" title="Read Wiki">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+                          </a>
+                      </div>
+                      <div class="text-xs text-slate-600 mb-2 flex items-center gap-1 border-b border-slate-100 pb-2">
+                          <span class="text-slate-400">${statusInfo.icon}</span>
+                          ${t.city} &bull; <span class="capitalize text-slate-500">${t.status}</span>
+                      </div>
+                      <p class="text-sm text-slate-600 mb-3">${t.desc}</p>
+                      <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                          <div class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Notable Work</div>
+                          <a href="${t.workLink}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 transition-colors">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>
+                              <span class="truncate">${t.work}</span>
+                          </a>
+                      </div>
+                  </div>
+              `;
+
+              const marker = L.marker([t.lat, t.lon], { icon: customIcon })
+                  .bindPopup(popupContent, { offset: [0, -8] })
+                  .addTo(map);
+              
+              if (i === 0 && window.innerWidth > 768) {
+                  setTimeout(() => marker.openPopup(), 400);
+              }
+
+              currentMarkers.push(marker);
+
+              const listItem = document.createElement('div');
+              listItem.className = "bg-white p-3.5 rounded-xl border border-slate-100 shadow-sm hover:border-indigo-200 hover:shadow-md transition-all cursor-pointer relative group";
+              
+              let shapeClass = "rounded-full";
+              if(t.status === 'emigrant') shapeClass = "rounded-sm";
+              if(t.status === 'immigrant') shapeClass = "rounded-sm rotate-45 transform scale-75";
+
+              listItem.innerHTML = `
+                  <div class="flex items-start gap-3">
+                      <div class="w-3 h-3 mt-1.5 shrink-0 ${shapeClass}" style="background-color: ${markerColor}"></div>
+                      <div class="w-full">
+                          <div class="flex justify-between items-start">
+                              <h4 class="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">${t.name}</h4>
+                              <a href="${t.wiki}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="p-1 rounded text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors shrink-0" title="Read on Wikipedia">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+                              </a>
+                          </div>
+                          <div class="text-[10px] lg:text-xs text-slate-500 mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                              <span class="font-medium" style="color: ${markerColor}">${t.lang}</span>
+                              <span>&bull;</span>
+                              <span class="flex items-center gap-0.5" title="${statusInfo.text}">
+                                  ${statusInfo.icon} ${t.city}
+                              </span>
+                          </div>
+                          <p class="text-xs lg:text-sm text-slate-600 leading-relaxed mb-3">${t.desc}</p>
+                          <a href="${t.workLink}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-slate-50 text-indigo-700 hover:bg-indigo-50 hover:text-indigo-800 transition-colors text-[10px] sm:text-xs font-semibold border border-slate-200 hover:border-indigo-200 w-fit">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5 opacity-80"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>
+                              Read: ${t.work}
+                          </a>
+                      </div>
+                  </div>
+              `;
+              
+              listItem.addEventListener('click', () => {
+                  map.flyTo([t.lat, t.lon], 7, { animate: true, duration: 1 });
+                  setTimeout(() => marker.openPopup(), 1000);
+              });
+
+              thinkersList.appendChild(listItem);
+          });
+      }
+
+      function togglePlay() {
+          if (isPlaying) {
+              clearInterval(animationInterval);
+              playIcon.innerHTML = '<path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />';
+              playBtn.classList.remove('bg-rose-500', 'hover:bg-rose-600', 'ring-rose-500');
+              playBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'ring-indigo-500');
+          } else {
+              if (parseInt(slider.value) === eras.length - 1) setEra(0);
+              animationInterval = setInterval(() => {
+                  let nextEra = parseInt(slider.value) + 1;
+                  if (nextEra >= eras.length) {
+                      togglePlay(); 
+                  } else {
+                      setEra(nextEra);
+                  }
+              }, 4000);
+              
+              playIcon.innerHTML = '<path fill-rule="evenodd" d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z" clip-rule="evenodd" />';
+              playBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'ring-indigo-500');
+              playBtn.classList.add('bg-rose-500', 'hover:bg-rose-600', 'ring-rose-500');
+          }
+          isPlaying = !isPlaying;
+      }
+
+      slider.addEventListener('input', (e) => {
+          if (isPlaying) togglePlay();
+          setEra(e.target.value);
+      });
+
+      playBtn.addEventListener('click', togglePlay);
+
+      // Initialize first era
+      setEra(0);
+  </script>
+</body>
+</html>
