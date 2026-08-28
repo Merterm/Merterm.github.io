@@ -1,10 +1,126 @@
 #gradient-canvas {
   width:100%;
   height:35%;
-  --gradient-color-1: #1b65879d; 
-  --gradient-color-2: #83c5be; 
-  --gradient-color-3: #b39cec;  
+  --gradient-color-1: #1b65879d;
+  --gradient-color-2: #83c5be;
+  --gradient-color-3: #b39cec;
   --gradient-color-4: #b9beff;
+}
+
+.interest-lede {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  width: 100%;
+  margin: 1rem 0 0.4rem;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-style: italic;
+  color: inherit;
+  opacity: 0.75;
+  cursor: pointer;
+  text-align: center;
+}
+
+.interest-lede:hover {
+  opacity: 1;
+}
+
+.teardrop {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50% 50% 50% 0;
+  background: linear-gradient(135deg, #1b6587, #b39cec);
+  transform: rotate(45deg);
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.7s ease;
+  flex-shrink: 0;
+}
+
+.interest-lede[aria-expanded="true"] .teardrop {
+  border-radius: 50%;
+  transform: rotate(405deg) scale(0.85);
+}
+
+.interest-reveal {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.interest-reveal.open {
+  max-height: 440px;
+}
+
+.interest-cloud {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(27, 101, 135, 0.18);
+  clip-path: circle(0.5% at var(--ox, 12%) 0%);
+  transition: clip-path 1.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.interest-cloud.open {
+  clip-path: circle(150% at var(--ox, 12%) 0%);
+}
+
+.interest-cloud > * {
+  opacity: 0;
+  transform: scale(0.82);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.interest-cloud.open > * {
+  opacity: 1;
+  transform: scale(1);
+}
+
+#interest-gradient-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.interest-tags {
+  position: absolute;
+  inset: 0;
+  font-size: 0.82rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.interest-tags .tag {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-weight: 700;
+  line-height: 1.1;
+  font-size: calc(0.7em + var(--w, 2) * 0.11em);
+  background: linear-gradient(120deg, #14506e, #2f8f86, #7c5cc4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.8), 0 0 22px rgba(179, 156, 236, 0.3);
+  white-space: nowrap;
+  cursor: default;
+  pointer-events: auto;
+  /* opacity, filter (blur) and z-index are driven per-frame by interestGradient.js
+     to express depth (a slow wave in z) and to fully hide whichever word is
+     behind another where they overlap. */
+  transition: opacity 0.5s ease, filter 0.5s ease;
+  will-change: transform, opacity;
+}
+
+.interest-tags .tag:hover {
+  opacity: 1 !important;
+  filter: blur(0px) !important;
 }
 
 body{
@@ -42,7 +158,9 @@ section{
 
 .profile-image{
   width:100%;
-  object-fit: cover;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  background-color: transparent;
   border-radius: 5px;
   /* position: relative;
   height:0; */
@@ -164,6 +282,15 @@ section{
       /* height:100%; */
       /* position: relative;
       padding-top: 100%; */
+  }
+  .interest-tags{
+      font-size: 0.66rem;
+  }
+  .interest-cloud{
+      height: 260px;
+  }
+  .interest-reveal.open{
+      max-height: 320px;
   }
 }
 

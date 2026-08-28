@@ -30,6 +30,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css"
     integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.1/css/academicons.min.css"
+    integrity="sha512-b1ASx0WHgVFL5ZQhTgiPWX+68KjS38Jk87jg7pe+qC7q9YkEtFq0z7xCglv7qGIs/68d3mAp+StfC8WKC5SSAg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/common.css">
   <link rel="stylesheet" href="assets/css/index.css">
@@ -46,6 +49,35 @@
   
   <script src="assets/js/common.js" type="module"></script>
   <script src="assets/js/index.js" type="module"></script>
+  <script type="module">
+    import { initInterestGradient } from './assets/js/interestGradient.js';
+    initInterestGradient('#interest-cloud', '#interest-gradient-canvas', '.tag');
+
+    const interestToggle = document.getElementById('interest-toggle');
+    const interestReveal = document.getElementById('interest-reveal');
+    const interestCloud = document.getElementById('interest-cloud');
+    let interestOpen = false;
+
+    function originXPercent() {
+      const buttonRect = interestToggle.getBoundingClientRect();
+      const cloudRect = interestCloud.getBoundingClientRect();
+      const originX = ((buttonRect.left + buttonRect.width / 2 - cloudRect.left) / cloudRect.width) * 100;
+      return Math.min(95, Math.max(5, originX));
+    }
+
+    interestCloud.style.setProperty('--ox', `${originXPercent().toFixed(1)}%`);
+    window.addEventListener('resize', () => {
+      if (!interestOpen) interestCloud.style.setProperty('--ox', `${originXPercent().toFixed(1)}%`);
+    });
+
+    interestToggle.addEventListener('click', () => {
+      interestOpen = !interestOpen;
+      if (interestOpen) interestCloud.style.setProperty('--ox', `${originXPercent().toFixed(1)}%`);
+      interestToggle.setAttribute('aria-expanded', String(interestOpen));
+      interestReveal.classList.toggle('open', interestOpen);
+      interestCloud.classList.toggle('open', interestOpen);
+    });
+  </script>
   <!-- <script src="assets/js/MTLLoader.js" type="module"></script> -->
   <!-- <script src="assets/js/GLTFLoader.js" type="module"></script>
   <script src="assets/js/OrbitControls.js" type="module"></script>
@@ -161,19 +193,29 @@
       <section class="column">
         <img class="profile-image" alt="Profile Image of Mert İnan">
         <div class="profile-item center">
-          PhD Candidate @ Northeastern University
+          Ph.D. from Northeastern University
         </div>
         <div class="profile-item center">
           <a class="link-btn" href="http://merterm.github.io/phd_cv.pdf"
             target="_blank">
-            Curriculum Vitæ
+            CV
           </a> <span class="dv">|</span>
-          <a class="link-btn" href="https://scholar.google.com/citations?user=ztpK4iwAAAAJ" target="_blank">
-            Google Scholar
+          <a href="https://scholar.google.com/citations?user=ztpK4iwAAAAJ" target="_blank"><i class="ai ai-google-scholar"
+              aria-hidden="true"></i>
+            <span class="visuallyhidden">Google Scholar</span>
           </a>
           <span class="dv">|</span>
           <a href="https://twitter.com/Merterm" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i>
             <span class="visuallyhidden">Twitter</span>
+          </a>
+          <span class="dv">|</span>
+          <a href="https://bsky.app/profile/merterm.bsky.social" target="_blank"><svg
+              style="height:1em;width:1em;vertical-align:-0.125em;fill:currentColor" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path
+                d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026" />
+            </svg>
+            <span class="visuallyhidden">Bluesky</span>
           </a>
           <span class="dv">|</span>
           <a href="https://www.linkedin.com/in/merterm/" target="_blank"><i class="fab fa-linkedin"
@@ -188,16 +230,48 @@
       </section>
       <section class="column">
 	<h2 class="title">i'm currently on the job market.</h2>
-        <p>I am a Ph.D. Candidate at <a href="https://www.khoury.northeastern.edu/">Khoury College of Computer Sciences</a> in <a href="https://www.northeastern.edu/">Northeastern University</a>. I am currently doing research with Dr. <a href="https://www.malihealikhani.com/">Malihe Alikhani</a>. I have a Master's in <a href="https://www.cmu.edu/cbd/">Computational Biology</a> from the School of Computer Science and Mellon College of Science of <a href="https://www.cmu.edu/">Carnegie Mellon University</a>. I did research with Prof. <a href="http://www.cnbc.cmu.edu/~tai/">Tai-Sing Lee</a>. My Bachelor's degree in Computer Science is from <a href="https://w3.bilkent.edu.tr/bilkent/">Bilkent University</a>, Turkey.
+        <p>I have a Ph.D. in Computer Science from <a href="https://www.khoury.northeastern.edu/">Khoury College of Computer Sciences</a> in <a href="https://www.northeastern.edu/">Northeastern University</a>, where I worked with Dr. <a href="https://www.malihealikhani.com/">Malihe Alikhani</a>. I have a Master's in <a href="https://www.cmu.edu/cbd/">Computational Biology</a> from the School of Computer Science and Mellon College of Science of <a href="https://www.cmu.edu/">Carnegie Mellon University</a>. I did research with Prof. <a href="http://www.cnbc.cmu.edu/~tai/">Tai-Sing Lee</a>. My Bachelor's degree in Computer Science is from <a href="https://w3.bilkent.edu.tr/bilkent/">Bilkent University</a>, Turkey.
         </p>
         <p> My research and background is transdisciplinary. I am currently interested in investigating cognitively-aware multimodal dialogue systems, sign language processing, and NeuroRoboNLP. I enjoy combining linguistics, cognitive neuroscience, and natural language processing through state-of-the-art machine learning applications.</p>
-	     <!-- <p> I see my research as a gradient: </p> 
-	      <img src="https://merterm.github.io/images/research_interest.png" style="width: 100%; object-fit: contain" /> -->
-        <!-- <p style="position: relative;">
-          <img src="https://merterm.github.io/images/research_interest.png" style='height: 100%; width: 100%; object-fit: contain; position: absolute'>
-          <canvas id="gradient-canvas" data-transition-in />
-        </p> -->
       </section>
+    </div>
+    <button type="button" class="interest-lede" id="interest-toggle" aria-expanded="false" aria-controls="interest-reveal">
+      <span>I see my research as a gradient:</span>
+      <span class="teardrop" aria-hidden="true"></span>
+    </button>
+    <div class="interest-reveal" id="interest-reveal">
+    <div class="interest-cloud" id="interest-cloud">
+      <canvas id="interest-gradient-canvas"></canvas>
+      <div class="interest-tags">
+        <span class="tag" style="--w:5; left:45%; top:44%;">Dialogue Systems</span>
+        <span class="tag" style="--w:5; left:24%; top:61%;">Sign Language Processing</span>
+        <span class="tag" style="--w:4; left:74%; top:40%;">Multimodal AI</span>
+        <span class="tag" style="--w:4; left:58%; top:22%;">Large Language Models</span>
+        <span class="tag" style="--w:4; left:41%; top:76%;">Discourse Coherence</span>
+        <span class="tag" style="--w:3; left:18%; top:26%;">Cognitive Science</span>
+        <span class="tag" style="--w:3; left:82%; top:58%;">Inclusive &amp; Accessible NLP</span>
+        <span class="tag" style="--w:3; left:36%; top:85%;">Computational Linguistics</span>
+        <span class="tag" style="--w:3; left:63%; top:66%;">Embodied AI</span>
+        <span class="tag" style="--w:3; left:55%; top:14%;">Agentic AI</span>
+        <span class="tag" style="--w:3; left:15%; top:72%;">NeuroRoboNLP</span>
+        <span class="tag" style="--w:3; left:78%; top:14%;">Evaluation &amp; Benchmarking</span>
+        <span class="tag" style="--w:3; left:50%; top:62%;">Pragmatics</span>
+        <span class="tag" style="--w:3; left:32%; top:48%;">Dialogue as Joint Action</span>
+        <span class="tag" style="--w:2; left:30%; top:15%;">Vision-Language Models</span>
+        <span class="tag" style="--w:2; left:9%; top:45%;">Computational Neuroscience</span>
+        <span class="tag" style="--w:2; left:91%; top:26%;">Bio-Inspired Deep Learning</span>
+        <span class="tag" style="--w:2; left:20%; top:88%;">Data Visualization</span>
+        <span class="tag" style="--w:2; left:85%; top:80%;">Backchannel Smiles</span>
+        <span class="tag" style="--w:2; left:38%; top:33%;">Multi-Agent Systems</span>
+        <span class="tag" style="--w:2; left:60%; top:53%;">Code Generation</span>
+        <span class="tag" style="--w:2; left:12%; top:13%;">Accessible Education</span>
+        <span class="tag" style="--w:1; left:66%; top:10%;">fMRI</span>
+        <span class="tag" style="--w:1; left:8%; top:60%;">Neuromorphic Hardware</span>
+        <span class="tag" style="--w:1; left:92%; top:50%;">Computational Biology</span>
+        <span class="tag" style="--w:1; left:48%; top:92%;">Ergodic Literature</span>
+        <span class="tag" style="--w:1; left:71%; top:90%;">Deleuzian Art Philosophy</span>
+      </div>
+    </div>
     </div>
     </div>
   </header>
@@ -364,6 +438,15 @@
         <div class="profile-item">
           <a href="https://twitter.com/Merterm" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i>
             <span class="visuallyhidden">Twitter</span>
+          </a>
+          <span class="dv">|</span>
+          <a href="https://bsky.app/profile/merterm.bsky.social" target="_blank"><svg
+              style="height:1em;width:1em;vertical-align:-0.125em;fill:currentColor" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path
+                d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026" />
+            </svg>
+            <span class="visuallyhidden">Bluesky</span>
           </a>
           <span class="dv">|</span>
           <!--           <a href="https://www.instagram.com/namwkim/" target="_blank"><i class="fab fa-instagram-square"
