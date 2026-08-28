@@ -51,7 +51,7 @@
   <script src="assets/js/index.js" type="module"></script>
   <script type="module">
     import { initInterestGradient } from './assets/js/interestGradient.js';
-    initInterestGradient('#interest-cloud', '#interest-gradient-canvas', '.tag');
+    const interestAnim = initInterestGradient('#interest-cloud', '#interest-gradient-canvas', '.tag');
 
     const interestToggle = document.getElementById('interest-toggle');
     const interestReveal = document.getElementById('interest-reveal');
@@ -73,6 +73,10 @@
     interestToggle.addEventListener('click', () => {
       interestOpen = !interestOpen;
       if (interestOpen) interestCloud.style.setProperty('--ox', `${originXPercent().toFixed(1)}%`);
+      // Flip the animation on/off in this same synchronous click handler
+      // (not via an async observer) so there's no lag between the reveal
+      // starting and the canvas actually being alive to show.
+      interestAnim.setActive(interestOpen);
       interestToggle.setAttribute('aria-expanded', String(interestOpen));
       interestReveal.classList.toggle('open', interestOpen);
       interestCloud.classList.toggle('open', interestOpen);

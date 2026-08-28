@@ -143,27 +143,50 @@ export function initInterestGradient(containerSelector, canvasSelector, tagSelec
   }
 
   const start = performance.now();
+  let lastFrame = 0;
+  // Starts inactive: the panel is collapsed behind a click-to-reveal
+  // teardrop, so there's no point animating it until it's actually open.
+  // The caller flips this synchronously in the same click handler that
+  // opens/closes the panel — no IntersectionObserver, no async lag, so
+  // there's no stale-frame flash when it wakes back up.
+  let active = false;
 
   function frame(now) {
+    // Canvas `filter: blur()` is one of the costliest 2D-canvas operations,
+    // and this scene's motion is slow and ambient — running the whole loop
+    // at a throttled ~30fps (instead of 60fps) is visually indistinguishable
+    // here but roughly halves the work, and pausing entirely while the tab
+    // is backgrounded (or the panel is closed) stops burning CPU for a
+    // scene nobody is looking at.
+    if (!active || document.hidden) {
+      requestAnimationFrame(frame);
+      return;
+    }
+    if (now - lastFrame < 33) {
+      requestAnimationFrame(frame);
+      return;
+    }
+    lastFrame = now;
+
     const t = (now - start) / 1000;
 
     // Ease the parallax target so movement feels fluid, not jittery.
     eased.x += (target.x - eased.x) * 0.04;
     eased.y += (target.y - eased.y) * 0.04;
 
+    // The radial gradients already fade smoothly to transparent on their
+    // own, so an extra canvas-wide blur pass just multiplies cost for very
+    // little visual gain — skip it.
     ctx.clearRect(0, 0, width, height);
-    ctx.filter = "blur(40px)";
     for (const w of washes) {
       w.update(t);
       w.draw(ctx);
     }
-    ctx.filter = "blur(3px)";
     const parallaxPx = { x: eased.x * 24, y: eased.y * 24 };
     for (const p of points) {
       p.update(t, parallaxPx);
       p.draw(ctx);
     }
-    ctx.filter = "none";
 
     // A slow, coherent wave travels across the surface (a function of each
     // word's own position, not an independent per-word twinkle), giving
@@ -218,4 +241,10 @@ export function initInterestGradient(containerSelector, canvasSelector, tagSelec
   window.addEventListener("resize", resize);
   resize();
   requestAnimationFrame(frame);
+
+  return {
+    setActive(value) {
+      active = value;
+    },
+  };
 }
