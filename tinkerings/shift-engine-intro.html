@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Shift Engine: Mapping 3,000 Years of Language Change in Anatolia - Mert İnan</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-image: url("../images/textured-mulberry-paper.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+      margin: 0;
+      padding: 40px 0;
+      background-color: #f4ece6;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .paper-container {
+      border: 2px solid #006d77;
+      border-radius: 8px;
+      padding: 50px 60px;
+      margin: 0 auto;
+      max-width: 800px;
+      background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    a.nav-back {
+      text-decoration: none;
+      color: #666;
+      font-family: sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+    a.nav-back:hover { color: #006d77; }
+
+    h1.article-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.6rem;
+      color: #052d3f;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+
+    .article-meta {
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      color: #666;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.5rem;
+    }
+
+    p {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+
+    .tr-term {
+      font-style: italic;
+      color: #006d77;
+      font-weight: 500;
+    }
+
+    /* --- The Launcher --- */
+    .launcher {
+      display: block;
+      text-decoration: none;
+      margin: 3rem 0 1rem 0;
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      border: 2px solid #83c5be;
+      background: linear-gradient(135deg, #052d3f 0%, #006d77 100%);
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .launcher:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 109, 119, 0.35);
+    }
+    .launcher:active { transform: translateY(-1px); }
+
+    .launcher-icon {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 1rem auto;
+      display: block;
+      animation: breathe 2.2s ease-in-out infinite;
+    }
+    .launcher-icon .corner {
+      transition: transform 0.25s ease;
+    }
+    .launcher:hover .corner-tl { transform: translate(-2px, -2px); }
+    .launcher:hover .corner-tr { transform: translate(2px, -2px); }
+    .launcher:hover .corner-bl { transform: translate(-2px, 2px); }
+    .launcher:hover .corner-br { transform: translate(2px, 2px); }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    .launcher-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #ffffff;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.02em;
+    }
+
+    .launcher-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #d1efec;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .launcher-sheen {
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+      animation: sheen 3.2s ease-in-out infinite;
+    }
+    @keyframes sheen {
+      0% { left: -60%; }
+      50% { left: 130%; }
+      100% { left: 130%; }
+    }
+
+    .launcher-hint {
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: -0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 700px) {
+      .paper-container { padding: 30px; margin: 10px; }
+      h1.article-title { font-size: 2rem; }
+    }
+
+    /* --- Full-screen embedded app view --- */
+    #fs-wrapper {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: #020617;
+    }
+    #fs-wrapper.active { display: block; }
+
+    #fs-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    /* Compact circular buttons that expand into a labeled pill on hover, so
+       they stay out of the way of the embedded app's own corner UI until
+       needed. */
+    .fs-overlay-btn {
+      position: fixed;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      color: #e2f4f2;
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(131, 197, 190, 0.5);
+      border-radius: 999px;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, width 0.2s ease, padding 0.2s ease;
+    }
+    .fs-overlay-btn .fs-btn-icon {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .fs-overlay-btn .fs-btn-label {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      padding-right: 0;
+    }
+    .fs-overlay-btn:hover,
+    .fs-overlay-btn:focus-visible {
+      width: 158px;
+      background: rgba(0, 109, 119, 0.9);
+      border-color: #83c5be;
+    }
+    .fs-overlay-btn:hover .fs-btn-label,
+    .fs-overlay-btn:focus-visible .fs-btn-label {
+      opacity: 1;
+      padding-right: 14px;
+    }
+
+    #fs-back-home { top: 14px; left: 14px; }
+    #fs-exit-fullscreen { bottom: 14px; left: 14px; }
+  </style>
+</head>
+<body>
+
+  <article class="paper-container">
+    <a href="../index.html" class="nav-back">← Back to Home</a>
+
+    <header>
+      <h1 class="article-title">The Shift Engine</h1>
+      <div class="article-meta">
+        Mert İnan &bull; Aug 2026 &bull; Historical Linguistics &amp; Interactive Simulation
+      </div>
+    </header>
+
+    <p>
+      Anatolia has changed hands and tongues more times than almost anywhere else on Earth. Hittite gave way to Phrygian and Greek, Greek to Persian administration without ever losing the street, Byzantine Greek gave way to Seljuk and then Ottoman Turkish — and at every turn, the language spoken by the empire and the language spoken at the dinner table drifted apart before eventually, sometimes, converging.
+    </p>
+
+    <p>
+      <span class="tr-term">The Shift Engine</span> is an interactive simulation spanning roughly 3,000 years — from the height of the Hittite Empire in 1250 BCE to the late Ottoman period — that lets you scrub through history and watch <em>superstrate</em> (the ruling administrative language) and <em>substrate</em> (what people actually spoke at home) pull apart and merge across ten regions, from Thrace to Arabia. Along the way it surfaces the individual stories — a bilingual household, a palace translator, a Damascus scribe — that are usually flattened out of the big historical narrative.
+    </p>
+
+    <a class="launcher" href="shift-engine/index.html" id="launch-link">
+      <div class="launcher-sheen"></div>
+      <svg class="launcher-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path class="corner corner-tl" d="M4 9V4h5" />
+        <path class="corner corner-tr" d="M15 4h5v5" />
+        <path class="corner corner-br" d="M20 15v5h-5" />
+        <path class="corner corner-bl" d="M9 20H4v-5" />
+      </svg>
+      <div class="launcher-title">Enter the Shift Engine</div>
+      <div class="launcher-sub">Click to go full screen</div>
+    </a>
+    <div class="launcher-hint">Best experienced full screen, on a larger window.</div>
+
+  </article>
+
+  <div id="fs-wrapper">
+    <iframe id="app-frame" title="Anatolian Language Shift Engine" allow="fullscreen"></iframe>
+    <a href="../index.html" id="fs-back-home" class="fs-overlay-btn" title="Back to Home">
+      <span class="fs-btn-icon">←</span><span class="fs-btn-label">Back to Home</span>
+    </a>
+    <button id="fs-exit-fullscreen" class="fs-overlay-btn" title="Exit Full Screen">
+      <span class="fs-btn-icon">⤢</span><span class="fs-btn-label">Exit Full Screen</span>
+    </button>
+  </div>
+
+  <script>
+    var launchLink = document.getElementById('launch-link');
+    var fsWrapper = document.getElementById('fs-wrapper');
+    var appFrame = document.getElementById('app-frame');
+    var exitFullscreenBtn = document.getElementById('fs-exit-fullscreen');
+    var appSrc = launchLink.getAttribute('href');
+
+    function isFullscreen() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement);
+    }
+
+    function requestFullscreenOn(el) {
+      if (el.requestFullscreen) return el.requestFullscreen();
+      if (el.webkitRequestFullscreen) return el.webkitRequestFullscreen();
+      return Promise.reject(new Error('Fullscreen API unavailable'));
+    }
+
+    function exitFullscreen() {
+      if (document.exitFullscreen) return document.exitFullscreen();
+      if (document.webkitExitFullscreen) return document.webkitExitFullscreen();
+    }
+
+    launchLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!appFrame.getAttribute('src')) {
+        appFrame.setAttribute('src', appSrc);
+      }
+      fsWrapper.classList.add('active');
+      requestFullscreenOn(fsWrapper).catch(function () {
+        /* Fullscreen denied or unsupported — the embedded view still works windowed. */
+      });
+    });
+
+    exitFullscreenBtn.addEventListener('click', function () {
+      if (isFullscreen()) exitFullscreen();
+    });
+
+    document.getElementById('fs-back-home').addEventListener('click', function () {
+      if (isFullscreen()) exitFullscreen();
+    });
+  </script>
+
+</body>
+</html>
