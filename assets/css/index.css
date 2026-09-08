@@ -323,6 +323,22 @@ section{
   .section-body > .bio-frame{
       overflow: hidden;
       min-height: 0;
+      /* .bio-frame's own padding/margin/border aren't affected by the grid
+         row collapsing to 0fr — box-sizing here is content-box, so they'd
+         otherwise stack on top of the 0-height row and leave a visible
+         card-shaped sliver behind even while "collapsed". Zero them out
+         here and restore them only once open, animating in step with the
+         row so it reads as one continuous bloom rather than two things
+         moving out of sync. */
+      margin: 0;
+      padding: 0;
+      border-width: 0;
+      transition: padding 0.4s ease, margin 0.4s ease, border-width 0.4s ease;
+  }
+  .section-body.open > .bio-frame{
+      margin: 20px auto;
+      padding: 30px;
+      border-width: 2px;
   }
 }
 

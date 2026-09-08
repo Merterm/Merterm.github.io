@@ -25,13 +25,20 @@ export function getImgURL(path) {
     if (path.startsWith("http") && path.includes("drive.google.com")) {
         const url = new URL(path);
         const urlParams = new URLSearchParams(url.search);
+        // lh3.googleusercontent.com is Google's public content CDN and serves
+        // publicly-shared Drive files without requiring an active Google
+        // session cookie. The previous "lh3.google.com/u/0/d/..." form is a
+        // Drive *web UI* path (the "/u/0/" account-switcher segment), which
+        // only resolves in a browser that already has an authenticated
+        // google.com session — that's why this only ever worked in Chrome
+        // (commonly signed into a Google account) and not Safari.
         if (urlParams.get("id")) {
-            return `https://lh3.google.com/u/0/d/${urlParams.get(
+            return `https://lh3.googleusercontent.com/d/${urlParams.get(
                 "id"
             )}`;
         } else {
             const id = path.split("/").slice(-2)[0]; // second from last
-            return `https://lh3.google.com/u/0/d/${id}`;
+            return `https://lh3.googleusercontent.com/d/${id}`;
         }
     } else {
         return path;
