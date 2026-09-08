@@ -81,6 +81,44 @@
       interestReveal.classList.toggle('open', interestOpen);
       interestCloud.classList.toggle('open', interestOpen);
     });
+
+    // Collapsible content sections (Publications, News, etc.) — mobile only.
+    // The CSS collapse rules only exist under the mobile media query, so on
+    // desktop toggling these classes has no visual effect; this just keeps
+    // aria-expanded truthful (always "true" on desktop, since nothing is
+    // actually hidden there).
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    const sectionToggles = document.querySelectorAll('.section-toggle');
+
+    function syncSectionToggles() {
+      sectionToggles.forEach((toggle) => {
+        if (mobileQuery.matches) return;
+        const body = document.getElementById(toggle.getAttribute('aria-controls'));
+        if (!body) return;
+        toggle.setAttribute('aria-expanded', 'true');
+        body.classList.add('open');
+      });
+    }
+
+    sectionToggles.forEach((toggle) => {
+      const body = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (!body) return;
+      toggle.addEventListener('click', () => {
+        if (!mobileQuery.matches) return;
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        body.classList.toggle('open', !expanded);
+      });
+      toggle.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle.click();
+        }
+      });
+    });
+
+    syncSectionToggles();
+    mobileQuery.addEventListener('change', syncSectionToggles);
   </script>
   <!-- <script src="assets/js/MTLLoader.js" type="module"></script> -->
   <!-- <script src="assets/js/GLTFLoader.js" type="module"></script>
@@ -285,7 +323,8 @@
 
     <div class="column">
       <section>
-        <h2 class="title">Publications</h2>
+        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-pubs">Publications<span class="section-chevron" aria-hidden="true"></span></h2>
+        <div class="section-body" id="section-body-pubs">
         <div class="bio-frame">
         <div class="search">
           <!-- <label for="search-news" class="visuallyhidden">Search Publications</label> -->
@@ -316,8 +355,9 @@
         <div class="pubs">
 
         </div>
+        </div>
+        </div>
       </section>
-      </div>
     </div>
     <div class="column">
       <!-- <section>
@@ -328,7 +368,8 @@
         <div><a class="see-all" href="/detail/?page=people">See All People ... </a></div>
       </section> -->
       <section class="column">
-        <h2 class="title">News</h2>
+        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-news">News<span class="section-chevron" aria-hidden="true"></span></h2>
+        <div class="section-body" id="section-body-news">
         <div class="bio-frame">
         <div class="search">
           <!-- <label for="search-news" class="visuallyhidden">Search News</label> -->
@@ -341,9 +382,11 @@
         </div>
         <div><a class="see-all" href="/detail/?page=news">See All News ... </a></div>
         </div>
+        </div>
       </section>
       <section>
-        <h2 class="title">Intellectual Tinkerings</h2>
+        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-tinkerings">Intellectual Tinkerings<span class="section-chevron" aria-hidden="true"></span></h2>
+        <div class="section-body" id="section-body-tinkerings">
         <div class="bio-frame">
           <p>Explorations, interactive experiments, and living documents.</p>
           
@@ -412,9 +455,11 @@
           </div>
 
         </div>
+        </div>
       </section>
       <section>
-        <h2 class="title">Books</h2>
+        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-books">Books<span class="section-chevron" aria-hidden="true"></span></h2>
+        <div class="section-body" id="section-body-books">
         <div class="bio-frame">
         <!-- Add the 0_Bgs_movie.gif and the book title and the authors -->
          <div class='pub' role="listitem">
@@ -428,16 +473,20 @@
                 </div>
             </div>
         </div>
+        </div>
       </section>
       <section>
-        <h2 class="title">Teaching</h2>
+        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-teaching">Teaching<span class="section-chevron" aria-hidden="true"></span></h2>
+        <div class="section-body" id="section-body-teaching">
         <div class="bio-frame">
         <div class="courses" role="list"></div>
         <div><a class="see-all" href="/detail/?page=teaching">See All Courses ... </a></div>
         </div>
+        </div>
       </section>
       <section>
-        <h2 class="title">Travels</h2>
+        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-travels">Travels<span class="section-chevron" aria-hidden="true"></span></h2>
+        <div class="section-body" id="section-body-travels">
         <div class="bio-frame">
         <div class="search">
           <input type="text" name='travel' placeholder="Search Travels..." aria-label="search travels">
@@ -445,9 +494,11 @@
         <div class="travels" role="list"></div>
         <div><a class="see-all" href="/detail/?page=travel">See All Travels ... </a></div>
         </div>
+        </div>
       </section>
       <section>
-        <h2 class="title">Contact</h2>
+        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-contact">Contact<span class="section-chevron" aria-hidden="true"></span></h2>
+        <div class="section-body" id="section-body-contact">
         <div class="bio-frame">
         <div class="profile-item email">
           inan dot m at northeastern dot edu
@@ -498,6 +549,7 @@
           <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
 	-->
+        </div>
         </div>
       </section>
     </div>
