@@ -44,7 +44,8 @@ Promise.all([
     let filter = document.querySelector('.chip.selected');
     dataCond = filter.dataset.cond;
     renderPubs(allPubs, dataCond);
-    renderCourses(value[3], courseContainer);
+    // Teaching is now a standalone portfolio page (/teaching/); the home page
+    // shows a summary card instead of the auto-generated course list.
     // console.log('people', value[4]);
     renderPeople(value[4], peopleContainer);
 });

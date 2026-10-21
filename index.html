@@ -214,6 +214,109 @@
     border-radius: 10px;
 }
 
+/* Teaching summary card */
+.teaching-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.tc-top {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+.tc-photo {
+    flex: 0 0 120px;
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(5, 45, 63, 0.18);
+}
+.tc-head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.tc-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem;
+    line-height: 1.3;
+    color: #052d3f;
+}
+.tc-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.tc-stat {
+    font-size: 0.76rem;
+    background: #eef6f4;
+    border: 1px solid #dcebe8;
+    color: #15616d;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+.tc-stat strong { color: #006d77; }
+
+/* always-visible highlights */
+.tc-highlights {
+    list-style: none;
+    margin: 2px 0 4px;
+    padding: 12px 0 2px;
+    border-top: 1px solid #e7efed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.tc-highlights li {
+    font-size: 0.86rem;
+    line-height: 1.45;
+    color: #3a4b50;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+.tc-highlights i {
+    color: #2f8f86;
+    margin-top: 3px;
+    width: 16px;
+    flex: 0 0 16px;
+    text-align: center;
+}
+.tc-highlights strong { color: #052d3f; }
+
+.tc-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    align-self: flex-start;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-image: linear-gradient(135deg, #006d77 0%, #1b6587 100%);
+    background-color: #006d77;
+    padding: 9px 18px;
+    border-radius: 22px;
+    border-bottom: none;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-image 0.15s ease;
+}
+/* Override the site-wide a:hover squiggle so the button keeps its fill */
+.tc-cta:hover {
+    color: #ffffff;
+    background-image: linear-gradient(135deg, #05545c 0%, #134f6b 100%);
+    background-color: #05545c;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: 0 0;
+    border-bottom: none;
+    padding-bottom: 9px;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 109, 119, 0.3);
+}
+
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
     .bio-frame,
@@ -222,6 +325,8 @@
         margin: 10px;
         padding: 20px;
     }
+    .tc-top { flex-direction: column; align-items: flex-start; }
+    .tc-photo { width: 100%; height: 180px; flex-basis: auto; }
 }
 </style>
 <body>
@@ -367,6 +472,37 @@
         </div>
         <div><a class="see-all" href="/detail/?page=people">See All People ... </a></div>
       </section> -->
+      <section>
+        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-teaching">Teaching<span class="section-chevron" aria-hidden="true"></span></h2>
+        <div class="section-body" id="section-body-teaching">
+        <div class="bio-frame">
+          <div class="teaching-card">
+            <div class="tc-top">
+              <img class="tc-photo" src="/images/teaching/summary.jpg" alt="Mert İnan presenting a lecture">
+              <div class="tc-head">
+                <div class="tc-tagline">Making abstract computer science tangible, inclusive, and a little bit joyful.</div>
+                <div class="tc-stats">
+                  <span class="tc-stat"><strong>8</strong> courses</span>
+                  <span class="tc-stat"><strong>3</strong> universities</span>
+                  <span class="tc-stat"><strong>12+</strong> mentees</span>
+                  <span class="tc-stat">2019&ndash;2025</span>
+                </div>
+              </div>
+            </div>
+
+            <ul class="tc-highlights">
+              <li><i class="fas fa-bolt"></i><span>Excited to teach classes across <strong>NLP</strong>, <strong>large language models</strong>, <strong>sign language processing</strong>, <strong>AI ethics</strong>, computational neuroscience, and ML for medicine.</span></li>
+              <li><i class="fas fa-play-circle"></i><span>Recorded full lectures on <strong>LLMs</strong> and on <strong>sign language processing</strong>, plus a shelf of paper-talk recordings.</span></li>
+              <li><i class="fas fa-chalkboard-teacher"></i><span>Taught <strong>8 courses</strong> across Northeastern, Pitt, and CMU, from Intro to NLP to computer graphics and theory of computation.</span></li>
+              <li><i class="fas fa-comments"></i><span>I teach with everyday metaphors, a <strong>democratic classroom</strong>, and &ldquo;language before tools.&rdquo;</span></li>
+              <li><i class="fas fa-users"></i><span>Gave invited guest lectures and mentored <strong>12+ students</strong>.</span></li>
+            </ul>
+
+            <a class="tc-cta" href="/teaching/">Explore the full teaching portfolio <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+        </div>
+      </section>
       <section class="column">
         <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-news">News<span class="section-chevron" aria-hidden="true"></span></h2>
         <div class="section-body" id="section-body-news">
@@ -488,15 +624,6 @@
                     <div class='pub-venue'><em>Philomath Press</em></div>
                 </div>
             </div>
-        </div>
-        </div>
-      </section>
-      <section>
-        <h2 class="title section-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="section-body-teaching">Teaching<span class="section-chevron" aria-hidden="true"></span></h2>
-        <div class="section-body" id="section-body-teaching">
-        <div class="bio-frame">
-        <div class="courses" role="list"></div>
-        <div><a class="see-all" href="/detail/?page=teaching">See All Courses ... </a></div>
         </div>
         </div>
       </section>

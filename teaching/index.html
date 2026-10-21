@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Teaching — Mert İnan">
+  <meta property="og:description"
+    content="Teaching portfolio of Mert İnan: philosophy, classroom moments, lecture videos, and course materials across NLP, graphics, theory, and more.">
+  <meta property="og:image" content="https://merterm.github.io/assets/images/mert.jpg">
+  <meta property="og:url" content="https://merterm.github.io/teaching/">
+  <meta name="author" content="Mert İnan">
+
+  <title>Teaching — Mert İnan</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css"
+    integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-10WJKQK9XQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-10WJKQK9XQ');
+  </script>
+
+  <style>
+    :root {
+      --teal: #006d77;
+      --teal-light: #83c5be;
+      --ink: #052d3f;
+      --violet: #b39cec;
+      --paper: #f4ece6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-image: url("../images/textured-mulberry-paper.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+      background-color: var(--paper);
+      margin: 0;
+      padding: 40px 16px;
+      font-family: 'Inter', sans-serif;
+      color: #333;
+    }
+
+    .paper-container {
+      border: 2px solid var(--teal);
+      border-radius: 8px;
+      padding: 48px 56px;
+      margin: 0 auto;
+      max-width: 940px;
+      background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    a.nav-back {
+      text-decoration: none;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+      display: block;
+      transition: color 0.2s;
+    }
+    a.nav-back:hover { color: var(--teal); }
+
+    h1.page-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.8rem;
+      color: var(--ink);
+      line-height: 1.1;
+      margin: 0.3rem 0 0.4rem;
+      position: relative;
+      display: inline-block;
+    }
+    h1.page-title::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 68%;
+      width: 100%; height: 26%;
+      background-color: var(--teal-light);
+      opacity: 0.55;
+      z-index: -1;
+    }
+
+    .page-lede {
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      color: #555;
+      font-size: 1.15rem;
+      max-width: 640px;
+      margin-bottom: 1.8rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1.6rem;
+    }
+
+    /* ===== Rolling tape of teachable topics ===== */
+    .tape-section { margin-bottom: 2.8rem; }
+    .tape-heading {
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .tape-wrap {
+      position: relative;
+      overflow: hidden;
+      padding: 4px 0;
+      /* fade the left/right edges so chips dissolve in and out */
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    }
+    .tape {
+      display: flex;
+      gap: 12px;
+      width: max-content;
+      padding: 7px 0;
+      will-change: transform;
+    }
+    .tape + .tape { margin-top: 12px; }
+    .tape.left  { animation: tape-scroll-left 60s linear infinite; }
+    .tape.right { animation: tape-scroll-right 52s linear infinite; }
+    .tape.left.slow { animation-duration: 72s; }
+    /* pause the whole band when the reader hovers it */
+    .tape-wrap:hover .tape { animation-play-state: paused; }
+
+    @keyframes tape-scroll-left  { from { transform: translateX(0); }   to { transform: translateX(-50%); } }
+    @keyframes tape-scroll-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tape { animation: none !important; flex-wrap: wrap; width: 100%; justify-content: center; }
+      .tape .dup { display: none; }
+      .tape-wrap { -webkit-mask-image: none; mask-image: none; }
+    }
+
+    .topic {
+      white-space: nowrap;
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background-clip: padding-box;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      cursor: default;
+    }
+    .topic:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 6px 16px rgba(5, 45, 63, 0.14);
+    }
+    /* colour families spanning the site's gradient palette */
+    .c-lang  { background: linear-gradient(135deg, #e3f5f2, #c7ebe6); color: #04565e; border-color: #a9ddd6; }
+    .c-ai    { background: linear-gradient(135deg, #006d77, #1b6587); color: #fff; }
+    .c-neuro { background: linear-gradient(135deg, #ede6fb, #ddd0f7); color: #5b43a0; border-color: #cbb9f0; }
+    .c-bio   { background: linear-gradient(135deg, #e6f4e9, #d2ecd8); color: #2f7a4a; border-color: #bfe2c8; }
+    .c-hci   { background: linear-gradient(135deg, #e5effb, #cfe0f6); color: #27568c; border-color: #bcd3ef; }
+    .c-hum   { background: linear-gradient(135deg, #f8eef6, #efd9ec); color: #8a3f78; border-color: #e7c6df; }
+    .c-cs    { background: linear-gradient(135deg, #eef1f3, #dde3e8); color: #3a4b57; border-color: #ccd5db; }
+    .c-grad  { background: linear-gradient(135deg, #006d77 0%, #83c5be 45%, #b39cec 100%); color: #fff; }
+
+    section.block { margin-bottom: 3rem; }
+
+    h2.section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--ink);
+      margin: 0 0 0.3rem;
+    }
+    h2.section-title .accent { color: var(--teal); }
+    .section-sub {
+      font-size: 0.95rem;
+      color: #888;
+      margin: 0 0 1.4rem;
+    }
+
+    p.philosophy {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: #333;
+      margin-bottom: 1.2rem;
+    }
+    .edit-note {
+      font-size: 0.8rem;
+      color: #b06a00;
+      background: #fff6e8;
+      border: 1px dashed #e7b96a;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin: 0.5rem 0 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Placeholder tiles (replace with <img>/<video>) */
+    .ph {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      border: 2px dashed var(--teal-light);
+      border-radius: 10px;
+      background: repeating-linear-gradient(45deg, #f7fbfa, #f7fbfa 12px, #eef6f4 12px, #eef6f4 24px);
+      color: #6b8f8a;
+      font-size: 0.82rem;
+      padding: 18px;
+      min-height: 150px;
+    }
+    .ph i { font-size: 1.6rem; color: var(--teal-light); }
+    .ph code {
+      font-size: 0.74rem;
+      color: #4b7a74;
+      background: #e4f1ee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Gallery grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .gallery .ph.tall { min-height: 150px; }
+    figure { margin: 0; }
+    figure img {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+    .gallery figure img {
+      height: 190px;
+      object-fit: cover;
+    }
+    figcaption {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    /* Sub-headings within a block */
+    .subhead {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin: 4px 0 12px;
+    }
+    .block > .subhead + .carousel { margin-bottom: 26px; }
+
+    /* ===== Carousels ===== */
+    .carousel { position: relative; margin-bottom: 20px; }
+    .car-track {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .car-track::-webkit-scrollbar { display: none; }
+    .car-track > * { scroll-snap-align: start; margin: 0; }
+    /* lectures: one big slide at a time */
+    .lectures-track > * { flex: 0 0 100%; }
+    /* talks: two side by side */
+    .talks-track > * { flex: 0 0 calc(50% - 9px); }
+
+    .lecture-feature video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      display: block;
+      background: #052d3f;
+      box-shadow: 0 6px 20px rgba(5, 45, 63, 0.18);
+    }
+    .lecture-feature figcaption {
+      font-family: 'Georgia', serif;
+      font-size: 0.98rem;
+      color: #444;
+      text-align: center;
+      max-width: 720px;
+      margin: 12px auto 0;
+    }
+    .talks-track video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 10px;
+      display: block;
+      background: #052d3f;
+    }
+    .talks-track figcaption {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 8px;
+      line-height: 1.45;
+    }
+
+    .car-btn {
+      position: absolute;
+      top: 38%;
+      transform: translateY(-50%);
+      z-index: 4;
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(5, 45, 63, 0.82);
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+      transition: background 0.15s, opacity 0.15s;
+    }
+    .car-btn:hover { background: var(--teal); }
+    .car-btn.prev { left: -10px; }
+    .car-btn.next { right: -10px; }
+    .car-btn[disabled] { opacity: 0; pointer-events: none; }
+
+    .car-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 14px;
+    }
+    .car-dots button {
+      width: 8px; height: 8px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: #cbd9d6;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .car-dots button.active { background: var(--teal); transform: scale(1.3); }
+
+    /* Course cards */
+    .course-card {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 20px;
+      padding: 20px;
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      background: #fff;
+      margin-bottom: 18px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .course-card:hover {
+      box-shadow: 0 8px 22px rgba(0, 109, 119, 0.12);
+      transform: translateY(-2px);
+    }
+    .course-card.featured {
+      border-color: var(--teal-light);
+      background: linear-gradient(135deg, #ffffff 0%, #f3faf9 100%);
+    }
+    .course-thumb .ph { min-height: 120px; height: 100%; }
+    .course-thumb img { width: 100%; border-radius: 8px; }
+    /* Minimalistic SVG course art */
+    .course-art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 130px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f3faf9, #e7f3f0);
+      border: 1px solid #dbebe8;
+      color: var(--teal);
+    }
+    .course-card.featured .course-art {
+      background: linear-gradient(135deg, #eef8f6, #ddeeea);
+    }
+    .course-art svg { width: 78px; height: 78px; }
+
+    /* Excerpt cut-outs & notebook snippet */
+    .excerpt-head {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9aa;
+      margin: 2px 0 8px;
+    }
+    .excerpts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 4px 0 14px;
+    }
+    .excerpt {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e3e3e3;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      text-decoration: none;
+      transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
+    }
+    .excerpt:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(5, 45, 63, 0.12);
+      border-color: var(--teal-light);
+    }
+    .excerpt-view {
+      height: 150px;
+      overflow: hidden;
+      background: #fbfbfa;
+      border-bottom: 1px solid #eee;
+      position: relative;
+    }
+    .excerpt-view img {
+      width: 100%;
+      display: block;
+    }
+    /* fade the bottom of each cut-out so it reads as a clipped snippet */
+    .excerpt-view::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 42px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+    }
+    .excerpt-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      color: #555;
+      padding: 9px 12px;
+    }
+    .excerpt-label i { color: var(--teal); }
+    .excerpt-label .open {
+      margin-left: auto;
+      color: var(--teal-light);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+    /* Notebook code excerpt */
+    .nb {
+      font-family: 'Inter', sans-serif;
+      background: #052d3f;
+      color: #e6f1f0;
+    }
+    .nb .excerpt-view {
+      height: 150px;
+      background: #052d3f;
+      border-bottom: 1px solid #0c3b4e;
+      padding: 10px 12px 0;
+    }
+    .nb .excerpt-view::after {
+      background: linear-gradient(to bottom, rgba(5,45,63,0), #052d3f);
+    }
+    .nb pre {
+      margin: 0;
+      font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.68rem;
+      line-height: 1.5;
+      color: #cfe8e4;
+      white-space: pre;
+    }
+    .nb .tok-kw { color: #83c5be; }
+    .nb .tok-fn { color: #b9beff; }
+    .nb .tok-str { color: #e9c893; }
+    .nb .tok-com { color: #6f98a0; }
+    .nb .excerpt-label { color: #bcd7d3; background: #063347; }
+    .nb .excerpt-label i { color: #83c5be; }
+    .nb .excerpt-label .open { color: #6f98a0; }
+    .nb .in-prompt { color: #7aa7b0; }
+
+    .course-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .course-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--ink);
+      margin: 0;
+    }
+    .featured-tag {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #fff;
+      background: var(--teal);
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .guest-tag { background: #8a6fd0; }
+    .course-terms {
+      font-size: 0.85rem;
+      color: #777;
+      margin: 4px 0 10px;
+    }
+    .course-terms .role {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    .course-terms a {
+      color: #3f6f6a;
+      text-decoration: none;
+      border-bottom: 1px dotted #9bc3bd;
+    }
+    .course-terms a:hover { color: var(--teal); border-bottom-color: var(--teal); }
+    .course-blurb {
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+      margin: 0 0 12px;
+    }
+    .materials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .material-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--teal);
+      border: 1px solid var(--teal-light);
+      border-radius: 20px;
+      padding: 5px 12px;
+      text-decoration: none;
+      background: #f4fbfa;
+      transition: background 0.15s, color 0.15s;
+    }
+    .material-chip:hover { background: var(--teal); color: #fff; }
+    .material-chip.disabled {
+      color: #aaa;
+      border-color: #ddd;
+      background: #f6f6f6;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 0.85rem;
+      margin: 36px auto 0;
+      max-width: 940px;
+    }
+
+    @media (max-width: 768px) {
+      .paper-container { padding: 28px 20px; }
+      h1.page-title { font-size: 2.1rem; }
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .talks-track > * { flex: 0 0 100%; }
+      .course-card { grid-template-columns: 1fr; }
+      .course-thumb .ph { min-height: 150px; }
+      .course-art { min-height: 150px; }
+      .excerpts { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="paper-container">
+    <a class="nav-back" href="../index.html">&larr; Back to home</a>
+
+    <h1 class="page-title">Teaching</h1>
+    <p class="page-lede">
+      Where my research meets the classroom, and how I make abstract computer science
+      tangible, inclusive, and a little bit joyful.
+    </p>
+
+    <!-- =============== ROLLING TAPE: WHAT I CAN TEACH =============== -->
+    <div class="tape-section">
+      <div class="tape-heading">Courses I look forward to teaching &mdash; across language, mind, machine &amp; matter</div>
+      <!-- Rows are generated from the TOPICS list in the script below.
+           To edit, add/remove items there (text + colour category). -->
+      <div class="tape-wrap" id="tape-wrap"></div>
+    </div>
+
+    <!-- =============== TEACHING PHILOSOPHY =============== -->
+    <section class="block">
+      <h2 class="section-title">Teaching <span class="accent">Philosophy</span></h2>
+      <p class="section-sub">What I try to do every time I step in front of a class.</p>
+
+      <!-- Edit wording freely to match your voice. -->
+      <p class="philosophy">
+        I teach computer science as a <em>craft you build intuition for</em>, not a pile of formulas
+        to memorize, and I build that intuition with metaphors from the kitchen and from ordinary
+        life. A recursive call is a recipe that quietly makes a smaller version of itself, and a
+        cache is just keeping the spices you reach for most within arm's length. Most of all, I
+        start with <em>questions</em>. Why are we doing this? Why does this model work? How did we
+        get here, and will it really replace everything that came before? Only then do I reach for a
+        concrete, slightly playful example, something a student can picture, poke at, and break,
+        because the abstraction finally lands once they have <em>felt</em> the problem it solves. I
+        try to match my effort to theirs, so thirty minutes of homework earns thirty minutes of
+        feedback, and I read the room and change course the moment an idea stops landing.
+      </p>
+      <p class="philosophy">
+        Structure is what makes the risk-taking possible. My materials stay consistent and
+        deliberately minimal, every lecture opens and closes with a short recap, and the deadlines
+        are plain, so students can spend their energy on understanding instead of logistics. Inside
+        that frame I run the room as a <em>dialogue</em> and a <em>democracy</em>: I watch for the
+        backchannel cues, the furrowed brows and the quiet nods, and I poll the class about pace and
+        comprehension so that no one is quietly left behind and every voice counts. I stay honest
+        about the dead ends and frustrations of real research, which is what lets students try
+        things that might fail. Inclusive design tends to make the work better too, and our Alexa
+        Prize TaskBot, which generated signed-language instructions, is the example I keep coming
+        back to.
+      </p>
+      <p class="philosophy">
+        Above all, I teach language before I teach the tools. People choose their words from what a
+        language offers and from what a listener already shares, and selection is an old idea, since
+        Aristotle's <em>Rhetoric</em> and <em>Poetics</em> are both accounts of it, while a model
+        only samples from the text that people wrote. A student who feels that difference reads an
+        output as one choice among many and asks what the model assumed, and I treat a prompt the
+        very same way, as an utterance to a listener who cannot ask what you meant, which is exactly
+        where my research on ambiguity lives, where most of the instructions I studied carried more
+        than one reading. So my students are welcome to use generative AI, and they are graded on
+        their audit of it: what they asked, what the model assumed, and what they verified. The best
+        moment in any course I teach is still the same, when a student stops asking &ldquo;is this
+        right?&rdquo; and starts asking &ldquo;what if I tried&hellip;?&rdquo;
+      </p>
+    </section>
+
+    <!-- =============== GALLERY: IN THE CLASSROOM =============== -->
+    <section class="block">
+      <h2 class="section-title">In the <span class="accent">Classroom</span></h2>
+      <p class="section-sub">Photos of me teaching and of the classes I've worked with.</p>
+
+      <div class="gallery">
+        <figure>
+          <img src="../images/teaching/classroom-1.jpg" alt="Mert mentoring alongside his lab-mates">
+          <figcaption>Mentoring with my lab-mates</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/teaching/presenting-1.jpg" alt="Mert presenting to a seated audience">
+          <figcaption>Presenting to a full room</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/teaching/classroom-2.jpg" alt="Mert explaining a research poster on agentic AI at ACL 2026">
+          <figcaption>Walking through ideas at a poster session, ACL 2026</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/teaching/classroom-3.jpg" alt="Mert at his PhD dissertation defense">
+          <figcaption>My dissertation defense, &ldquo;Threading Meaning&rdquo;</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/teaching/presenting-2.jpg" alt="Mert presenting live at *SEM 2023, ACL, in Toronto">
+          <figcaption>Presenting live at *SEM&nbsp;2023 (ACL), Toronto</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/teaching/presenting-virtual.jpg" alt="Mert presenting virtually to a conference audience">
+          <figcaption>Presenting virtually to a conference audience</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/teaching/presenting-amazon.jpg" alt="Mert at the Amazon Trusted AI Symposium 2026 in New York City">
+          <figcaption>At the Amazon Trusted AI Symposium 2026, NYC</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/teaching/classroom-4.jpg" alt="Mert presenting at SemDial 2022 in Dublin, Ireland">
+          <figcaption>Presenting at SemDial 2022, Dublin, Ireland</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- =============== LECTURES & TALKS (VIDEO) =============== -->
+    <section class="block">
+      <h2 class="section-title">Lectures &amp; <span class="accent">Talks</span></h2>
+      <p class="section-sub">Recorded lectures and presentations.</p>
+
+      <!-- Featured full-length lectures — swipeable, one at a time -->
+      <h3 class="subhead">Full lectures</h3>
+      <div class="carousel" data-carousel aria-label="Full lectures carousel">
+        <button class="car-btn prev" type="button" aria-label="Previous lecture">&#8249;</button>
+        <div class="car-track lectures-track">
+          <figure class="lecture-feature">
+            <video controls preload="none" poster="../images/teaching/lecture-poster.jpg"
+              src="../images/teaching/lecture-intro-to-llms.mp4"></video>
+            <figcaption>
+              <strong>Introduction to Large Language Models</strong> &mdash; a full class lecture from
+              <em>Introduction to NLP</em> (CS 4120 / 6120, Northeastern, Fall 2025), tracing how we
+              got from n-grams to open-weight frontier models.
+            </figcaption>
+          </figure>
+          <figure class="lecture-feature">
+            <video controls preload="none" poster="../images/teaching/lecture-signlang-poster.jpg"
+              src="../images/teaching/lecture-signlang-intro.mp4"></video>
+            <figcaption>
+              <strong>A Soft Introduction to Sign Language Processing</strong> &mdash; a full lecture
+              on how sign languages work as full linguistic systems and what it takes to model them
+              computationally.
+            </figcaption>
+          </figure>
+        </div>
+        <button class="car-btn next" type="button" aria-label="Next lecture">&#8250;</button>
+        <div class="car-dots" aria-hidden="true"></div>
+      </div>
+
+      <!-- Paper-presentation talks — swipeable, two at a time -->
+      <h3 class="subhead">Paper presentations</h3>
+      <div class="carousel" data-carousel data-per="2" aria-label="Paper presentations carousel">
+        <button class="car-btn prev" type="button" aria-label="Previous talks">&#8249;</button>
+        <div class="car-track talks-track">
+          <figure>
+            <video controls preload="none" src="../images/teaching/talk-coherence.mp4"></video>
+            <figcaption>Coherence-aware evaluation of image captions (RaCCoon)</figcaption>
+          </figure>
+          <figure>
+            <video controls preload="none" src="../images/teaching/talk-signlang.mp4"></video>
+            <figcaption>Representing intensification in sign-language gloss</figcaption>
+          </figure>
+          <figure>
+            <video controls preload="none" src="../images/teaching/talk-eyegaze.mp4"></video>
+            <figcaption>Measuring reading &amp; eye gaze with webcam trackers</figcaption>
+          </figure>
+          <figure>
+            <video controls preload="none" src="../images/teaching/talk-sign2sign.mp4"></video>
+            <figcaption>Sign-to-sign translation across sign-language corpora</figcaption>
+          </figure>
+          <figure>
+            <video controls preload="none" src="../images/teaching/talk-signalign.mp4"></video>
+            <figcaption>SignAlignLM: a model zoo for sign-language modeling</figcaption>
+          </figure>
+        </div>
+        <button class="car-btn next" type="button" aria-label="Next talks">&#8250;</button>
+        <div class="car-dots" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- =============== COURSES =============== -->
+    <section class="block">
+      <h2 class="section-title">Courses I've <span class="accent">Taught</span></h2>
+      <p class="section-sub">Each card can hold a thumbnail, a blurb, and material excerpts (lecture notes, assignments, video).</p>
+
+      <!-- ---- Invited guest lecture: Vectors & SVD ---- -->
+      <div class="course-card featured">
+        <div class="course-thumb">
+          <div class="course-art" aria-label="Vectors and linear algebra icon">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 80 H84 M20 80 V16"/>
+              <line x1="20" y1="80" x2="66" y2="38" stroke="#2f8f86"/>
+              <path d="M66 38 55 40 M66 38 64 49" stroke="#2f8f86"/>
+              <line x1="20" y1="80" x2="44" y2="28" stroke="#9a7fe0"/>
+              <path d="M44 28 34 32 M44 28 46 39" stroke="#9a7fe0"/>
+            </svg>
+          </div>
+        </div>
+        <div class="course-body">
+          <div class="course-head">
+            <h3 class="course-name">Vectors &amp; Singular Value Decomposition</h3>
+            <span class="featured-tag guest-tag">Invited</span>
+          </div>
+          <div class="course-terms">
+            <span class="role">Guest Lecture</span> &middot; University of Denver (teaching demonstration, 2025)
+          </div>
+          <p class="course-blurb">
+            An invited teaching-demonstration lecture building intuition for vector spaces, cosine
+            similarity, and the singular value decomposition &mdash; starting from an everyday
+            &ldquo;coffee-order&rdquo; metaphor and a democratic <em>pause</em> prompt before reaching
+            the linear algebra.
+          </p>
+          <div class="excerpt-head">Peek inside the lecture</div>
+          <div class="excerpts">
+            <a class="excerpt" href="../images/teaching/guest-lecture-svd.pdf" target="_blank">
+              <div class="excerpt-view"><img src="../images/teaching/excerpt-svd-notes.png" alt="Lecture-notes excerpt: coffee-order metaphor for vector spaces"></div>
+              <div class="excerpt-label"><i class="far fa-file-alt"></i>Lecture notes &middot; vectors as coffee orders<span class="open">Open PDF&nbsp;&#8599;</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- Introduction to NLP (FEATURED) ---- -->
+      <div class="course-card featured">
+        <div class="course-thumb">
+          <div class="course-art" aria-label="Natural language processing icon">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M18 22h64a6 6 0 0 1 6 6v28a6 6 0 0 1-6 6H42L26 80V62H18a6 6 0 0 1-6-6V28a6 6 0 0 1 6-6Z"/>
+              <rect x="23" y="33" width="17" height="9" rx="2.5" fill="#83c5be" stroke="none"/>
+              <rect x="44" y="33" width="12" height="9" rx="2.5" fill="#b39cec" stroke="none"/>
+              <rect x="60" y="33" width="17" height="9" rx="2.5"/>
+              <line x1="23" y1="51" x2="70" y2="51"/>
+            </svg>
+          </div>
+        </div>
+        <div class="course-body">
+          <div class="course-head">
+            <h3 class="course-name">Introduction to NLP</h3>
+            <span class="featured-tag">Featured</span>
+          </div>
+          <div class="course-terms">
+            <span class="role">Teaching Assistant</span> &middot; <a href="https://catalog.northeastern.edu/course-descriptions/cs/#CS4120" target="_blank" rel="noopener">Northeastern University</a> (Fall 2025) &middot; <a href="https://courses.sci.pitt.edu/courses/view/CS-2731" target="_blank" rel="noopener">University of Pittsburgh</a> (Spring 2023)
+          </div>
+          <!-- Edit this blurb to match exactly what you did. -->
+          <p class="course-blurb">
+            I taught language modeling, attention, and large language models &mdash; delivering full
+            lectures, designing homeworks and in-class activities, and running a coherence-focused
+            discourse-parsing session that tied the course to my own research in multimodal AI.
+          </p>
+
+          <div class="excerpt-head">Peek inside the course</div>
+          <div class="excerpts">
+            <a class="excerpt" href="../images/teaching/nlp-homework-1.pdf" target="_blank">
+              <div class="excerpt-view"><img src="../images/teaching/excerpt-nlp-hw1.png" alt="Homework 1 excerpt: discourse relations reference table"></div>
+              <div class="excerpt-label"><i class="fas fa-tasks"></i>Homework 1 &middot; discourse parsing<span class="open">Open PDF&nbsp;&#8599;</span></div>
+            </a>
+            <a class="excerpt" href="../images/teaching/nlp-midterm.pdf" target="_blank">
+              <div class="excerpt-view"><img src="../images/teaching/excerpt-nlp-midterm.png" alt="Midterm excerpt: precision, recall and F-score evaluation question"></div>
+              <div class="excerpt-label"><i class="fas fa-file-alt"></i>Midterm &middot; precision / recall / F-score<span class="open">Open PDF&nbsp;&#8599;</span></div>
+            </a>
+            <a class="excerpt" href="../images/teaching/nlp-extra-credit.pdf" target="_blank">
+              <div class="excerpt-view"><img src="../images/teaching/excerpt-nlp-extracredit.png" alt="Extra-credit excerpt: sycophantic bias in generative models and journalism"></div>
+              <div class="excerpt-label"><i class="fas fa-star"></i>Extra credit &middot; sycophancy &amp; journalism<span class="open">Open PDF&nbsp;&#8599;</span></div>
+            </a>
+            <a class="excerpt nb" href="../images/teaching/nlp-hw2-sycophancy.ipynb" target="_blank">
+              <div class="excerpt-view"><pre><span class="in-prompt">In [3]:</span> <span class="tok-com"># HW2 · measuring LLM sycophancy</span>
+<span class="tok-kw">from</span> huggingface_hub <span class="tok-kw">import</span> InferenceClient
+client = InferenceClient(api_key=HF_TOKEN)
+
+<span class="tok-kw">def</span> <span class="tok-fn">query_hf</span>(prompt, model=<span class="tok-str">"deepseek-ai/DeepSeek-V3.2"</span>):
+    out = client.chat.completions.create(
+        model=model,
+        messages=[{<span class="tok-str">"role"</span>: <span class="tok-str">"user"</span>,
+                   <span class="tok-str">"content"</span>: prompt}])
+    <span class="tok-kw">return</span> out.choices[<span class="tok-str">0</span>].message.content</pre></div>
+              <div class="excerpt-label"><i class="fas fa-code"></i>HW2 notebook &middot; sycophancy experiments<span class="open">Open .ipynb&nbsp;&#8599;</span></div>
+            </a>
+          </div>
+
+          <div class="materials">
+            <a class="material-chip" href="../images/teaching/lecture-intro-to-llms.mp4" target="_blank"><i class="fas fa-play-circle"></i>Full lecture: Intro to LLMs</a>
+            <a class="material-chip" href="../images/teaching/nlp-homework-3.pdf" target="_blank"><i class="fas fa-tasks"></i>Homework 3</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- Introduction to Computer Graphics (FEATURED) ---- -->
+      <div class="course-card featured">
+        <div class="course-thumb">
+          <div class="course-art" aria-label="Computer graphics icon">
+            <svg viewBox="0 0 100 100" stroke="currentColor" stroke-width="3" stroke-linejoin="round">
+              <polygon points="50,20 80,37 50,54 20,37" fill="#cdeee9"/>
+              <polygon points="20,37 50,54 50,84 20,67" fill="#eff7f5"/>
+              <polygon points="80,37 50,54 50,84 80,67" fill="#e3def6"/>
+            </svg>
+          </div>
+        </div>
+        <div class="course-body">
+          <div class="course-head">
+            <h3 class="course-name">Introduction to Computer Graphics</h3>
+            <span class="featured-tag">Featured</span>
+          </div>
+          <div class="course-terms">
+            <span class="role">Teaching Assistant</span> &middot; <a href="https://catalog.northeastern.edu/course-descriptions/cs/#CS4300" target="_blank" rel="noopener">Northeastern University</a> (Spring 2023, Fall 2023)
+          </div>
+          <p class="course-blurb">
+            [Your blurb: e.g. mentored students through the rasterization and ray-tracing
+            pipelines, debugged C++/OpenGL projects, and designed visual demos that made
+            transforms and shading click.]
+          </p>
+        </div>
+      </div>
+
+      <!-- ---- Computational Perception (FEATURED) ---- -->
+      <div class="course-card featured">
+        <div class="course-thumb">
+          <div class="course-art" aria-label="Computational perception icon">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 50 Q50 22 88 50 Q50 78 12 50Z"/>
+              <circle cx="50" cy="50" r="14" fill="#83c5be" stroke="none"/>
+              <circle cx="50" cy="50" r="14"/>
+              <circle cx="50" cy="50" r="4.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+        </div>
+        <div class="course-body">
+          <div class="course-head">
+            <h3 class="course-name">Computational Perception</h3>
+            <span class="featured-tag">Featured</span>
+          </div>
+          <div class="course-terms">
+            <span class="role">Teaching Assistant</span> &middot; <a href="https://www.cnbc.cmu.edu/~tai/cp19.html" target="_blank" rel="noopener">Carnegie Mellon University</a> (Fall 2019)
+          </div>
+          <p class="course-blurb">
+            [Your blurb: e.g. supported a graduate course bridging neuroscience and computer
+            vision, guided projects on visual cortex modeling, and tied assignments to my
+            own research with Tai-Sing Lee.]
+          </p>
+        </div>
+      </div>
+
+      <!-- ---- Introduction to Data Science ---- -->
+      <div class="course-card">
+        <div class="course-thumb">
+          <div class="course-art" aria-label="Data science icon">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16 V80 H86"/>
+              <rect x="31" y="54" width="11" height="24" fill="#83c5be" stroke="none"/>
+              <rect x="48" y="40" width="11" height="38" fill="#b39cec" stroke="none"/>
+              <rect x="65" y="28" width="11" height="50" fill="#cdeee9" stroke="none"/>
+              <rect x="31" y="54" width="11" height="24"/>
+              <rect x="48" y="40" width="11" height="38"/>
+              <rect x="65" y="28" width="11" height="50"/>
+            </svg>
+          </div>
+        </div>
+        <div class="course-body">
+          <div class="course-head">
+            <h3 class="course-name">Introduction to Data Science</h3>
+          </div>
+          <div class="course-terms">
+            <span class="role">Teaching Assistant</span> &middot; <a href="https://courses.sci.pitt.edu/courses/view/CS-1656" target="_blank" rel="noopener">University of Pittsburgh</a> (Fall 2022)
+          </div>
+          <p class="course-blurb">
+            [Your blurb: e.g. taught data wrangling, visualization, and intro ML in Python;
+            graded projects and ran hands-on lab sessions.]
+          </p>
+        </div>
+      </div>
+
+      <!-- ---- Theory of Computation ---- -->
+      <div class="course-card">
+        <div class="course-thumb">
+          <div class="course-art" aria-label="Theory of computation icon">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 56 H20"/>
+              <circle cx="34" cy="56" r="14" fill="#eef7f5"/>
+              <circle cx="72" cy="56" r="14" fill="#e3def6"/>
+              <circle cx="72" cy="56" r="8.5"/>
+              <path d="M48 56 H57"/>
+              <path d="M53 51.5 58 56 53 60.5"/>
+              <path d="M24 44 Q34 24 45 42"/>
+              <path d="M45 42 39 41 M45 42 44 48"/>
+            </svg>
+          </div>
+        </div>
+        <div class="course-body">
+          <div class="course-head">
+            <h3 class="course-name">Theory of Computation</h3>
+          </div>
+          <div class="course-terms">
+            <span class="role">Teaching Assistant</span> &middot; <a href="https://courses.sci.pitt.edu/courses/view/CS-1511" target="_blank" rel="noopener">University of Pittsburgh</a> (Spring 2022)
+          </div>
+          <p class="course-blurb">
+            [Your blurb: e.g. led problem sessions on automata, Turing machines, and
+            complexity; helped students build proofs from intuition up.]
+          </p>
+        </div>
+      </div>
+
+      <!-- ---- Algorithms and Data Structures ---- -->
+      <div class="course-card">
+        <div class="course-thumb">
+          <div class="course-art" aria-label="Algorithms and data structures icon">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="50" y1="26" x2="30" y2="54"/>
+              <line x1="50" y1="26" x2="70" y2="54"/>
+              <line x1="30" y1="58" x2="22" y2="80"/>
+              <line x1="30" y1="58" x2="40" y2="80"/>
+              <line x1="70" y1="58" x2="78" y2="80"/>
+              <circle cx="50" cy="24" r="9" fill="#83c5be" stroke="none"/><circle cx="50" cy="24" r="9"/>
+              <circle cx="30" cy="56" r="8" fill="#b39cec" stroke="none"/><circle cx="30" cy="56" r="8"/>
+              <circle cx="70" cy="56" r="8" fill="#cdeee9" stroke="none"/><circle cx="70" cy="56" r="8"/>
+              <circle cx="22" cy="83" r="6.5"/><circle cx="40" cy="83" r="6.5"/><circle cx="78" cy="83" r="6.5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="course-body">
+          <div class="course-head">
+            <h3 class="course-name">Algorithms and Data Structures</h3>
+          </div>
+          <div class="course-terms">
+            <span class="role">Teaching Assistant</span> &middot; <a href="https://courses.sci.pitt.edu/courses/view/CS-1501" target="_blank" rel="noopener">University of Pittsburgh</a> (Spring 2022)
+          </div>
+          <p class="course-blurb">
+            [Your blurb: e.g. coached students through sorting, graphs, and dynamic
+            programming with worked examples and whiteboard walkthroughs.]
+          </p>
+        </div>
+      </div>
+
+      <!-- ---- Formal Methods in Computer Science ---- -->
+      <div class="course-card">
+        <div class="course-thumb">
+          <div class="course-art" aria-label="Formal methods icon">
+            <svg viewBox="0 0 100 100" fill="currentColor" font-family="'Playfair Display', Georgia, serif">
+              <text x="50" y="48" text-anchor="middle" font-size="30">&#8704; &#8707; &#172;</text>
+              <text x="50" y="82" text-anchor="middle" font-size="27" fill="#2f8f86">P &#8866; Q</text>
+            </svg>
+          </div>
+        </div>
+        <div class="course-body">
+          <div class="course-head">
+            <h3 class="course-name">Formal Methods in Computer Science</h3>
+          </div>
+          <div class="course-terms">
+            <span class="role">Teaching Assistant</span> &middot; <a href="https://courses.sci.pitt.edu/courses/view/CS-1502" target="_blank" rel="noopener">University of Pittsburgh</a> (Fall 2020, Spring 2021, Fall 2021)
+          </div>
+          <p class="course-blurb">
+            [Your blurb: e.g. taught logic, proof techniques, and discrete structures across
+            three semesters; refined the recitation materials over time.]
+          </p>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <footer>
+    Copyright © <span id="copyright-year"></span> Mert İnan.
+  </footer>
+  <script>
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+    /* ----- Swipeable carousels (lectures + talks) ----- */
+    document.querySelectorAll('[data-carousel]').forEach((car) => {
+      const track = car.querySelector('.car-track');
+      const prev = car.querySelector('.car-btn.prev');
+      const next = car.querySelector('.car-btn.next');
+      const dotsWrap = car.querySelector('.car-dots');
+      const slides = Array.from(track.children);
+      const per = parseInt(car.dataset.per || '1', 10);
+      const pages = Math.max(1, Math.ceil(slides.length / per));
+
+      // page = how far one arrow click scrolls (the visible width)
+      const step = () => track.clientWidth + 18; // gap-aware-ish; clientWidth is enough for snap
+
+      if (dotsWrap) {
+        for (let i = 0; i < pages; i++) {
+          const d = document.createElement('button');
+          d.type = 'button';
+          d.addEventListener('click', () => {
+            track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+          });
+          dotsWrap.appendChild(d);
+        }
+      }
+      if (pages <= 1) { // nothing to navigate
+        if (prev) prev.style.display = 'none';
+        if (next) next.style.display = 'none';
+        if (dotsWrap) dotsWrap.style.display = 'none';
+        return;
+      }
+
+      function update() {
+        const max = track.scrollWidth - track.clientWidth - 2;
+        if (prev) prev.disabled = track.scrollLeft <= 2;
+        if (next) next.disabled = track.scrollLeft >= max;
+        if (dotsWrap) {
+          const idx = Math.round(track.scrollLeft / track.clientWidth);
+          dotsWrap.querySelectorAll('button').forEach((b, i) =>
+            b.classList.toggle('active', i === idx));
+        }
+      }
+      if (prev) prev.addEventListener('click', () =>
+        track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }));
+      if (next) next.addEventListener('click', () =>
+        track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }));
+      track.addEventListener('scroll', () => window.requestAnimationFrame(update));
+      window.addEventListener('resize', update);
+      update();
+    });
+
+    /* ----- Rolling tape of teachable topics -----
+       Edit this list freely: [label, colour-category].
+       Categories: lang, ai, neuro, bio, hci, hum, cs, grad (rainbow accent). */
+    const TOPICS = [
+      // Language, linguistics & NLP
+      ['Natural Language Processing', 'lang'],
+      ['Computational Linguistics', 'lang'],
+      ['Large Language Models', 'ai'],
+      ['Sign Language Linguistics', 'lang'],
+      ['Multimodal Machine Learning', 'ai'],
+      ['Code Generation Models', 'ai'],
+      ['Dialogue & Conversational AI', 'lang'],
+      ['Animal Communication & NLP', 'lang'],
+      ['Animals & Language Models', 'bio'],
+      ['Pragmatics & Meaning-Making', 'hum'],
+      ['Philosophy of Language', 'hum'],
+      // AI / ML core
+      ['Machine Learning', 'cs'],
+      ['Artificial Intelligence', 'ai'],
+      ['Deep Learning', 'ai'],
+      ['Designing Agentic Systems', 'grad'],
+      ['AI System Design', 'ai'],
+      ['Multi-Agent Systems', 'ai'],
+      ['AI Evaluation & Benchmarking', 'cs'],
+      ['Evaluating LLMs', 'ai'],
+      ['The Science of Benchmarking', 'cs'],
+      // AI ethics & responsibility
+      ['AI Ethics', 'hum'],
+      ['LLMs & Ethics', 'hum'],
+      ['Responsible & Trustworthy AI', 'hum'],
+      // AI for health & medicine
+      ['Machine Learning in Medicine', 'bio'],
+      ['Multimodal Language Models for Medicine', 'bio'],
+      ['AI for Palliative Care', 'bio'],
+      ['Computational Olfaction & Smell', 'neuro'],
+      // Neuroscience & neural computation
+      ['Computational Neuroscience', 'neuro'],
+      ['Neural Computation', 'neuro'],
+      ['Systems Neuroscience', 'neuro'],
+      ['Bio-Inspired Deep Learning', 'neuro'],
+      ['Computational Perception', 'neuro'],
+      ['Cognitive Science', 'neuro'],
+      // Graphics, HCI & interaction
+      ['Computer Graphics', 'hci'],
+      ['Augmented & Virtual Reality', 'hci'],
+      ['Human-Computer Interaction', 'hci'],
+      ['Human-AI Interaction', 'hci'],
+      ['Data Visualization', 'hci'],
+      ['Accessible & Inclusive Computing', 'grad'],
+      // Biology background
+      ['Computational Biology', 'bio'],
+      ['Cellular & Molecular Biology', 'bio'],
+      ['Microbiology', 'bio'],
+      ['Biological Modeling', 'bio'],
+      // Humanities & philosophy
+      ['Philosophy of Mind', 'hum'],
+      ['Interaction & Joint Action', 'hum'],
+      // CS core
+      ['Theory of Computation', 'cs'],
+      ['Formal Methods', 'cs'],
+      ['Data Structures & Algorithms', 'cs'],
+      ['Introduction to Data Science', 'cs'],
+      ['Foundations of Programming', 'cs'],
+    ];
+
+    (function buildTape() {
+      const wrap = document.getElementById('tape-wrap');
+      if (!wrap) return;
+
+      // Shuffle so colours interleave nicely, then split into 3 rows.
+      const shuffled = TOPICS.slice();
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      const rows = [[], [], []];
+      shuffled.forEach((t, i) => rows[i % 3].push(t));
+
+      const dirs = ['left', 'right', 'left slow'];
+      rows.forEach((items, r) => {
+        const tape = document.createElement('div');
+        tape.className = 'tape ' + dirs[r];
+        // Duplicate the sequence once so the -50% keyframe loops seamlessly.
+        const seq = items.concat(items);
+        seq.forEach((t, idx) => {
+          const chip = document.createElement('span');
+          chip.className = 'topic c-' + t[1] + (idx >= items.length ? ' dup' : '');
+          chip.textContent = t[0];
+          if (idx >= items.length) chip.setAttribute('aria-hidden', 'true');
+          tape.appendChild(chip);
+        });
+        wrap.appendChild(tape);
+      });
+    })();
+  </script>
+</body>
+
+</html>
